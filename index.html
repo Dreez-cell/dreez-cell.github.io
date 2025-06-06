@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
   <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
   <title>Testagram</title>
@@ -11,23 +11,49 @@
     body { font-family: sans-serif; width: 100vw; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
     body.light { background: #fff; color: #000; }
     body.dark { background: #000; color: #fff; }
-    header { height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 20px; font-weight: bold; border-bottom: 1px solid; }
+    header {
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; font-size: 20px; font-weight: bold;
+      border-bottom: 1px solid;
+    }
     body.light header { background: #f9f9f9; color: #000; border-color: #ccc; }
     body.dark header { background: #111; color: #fff; border-color: #222; }
-    .theme-toggle { font-size: 20px; background: none; border: none; cursor: pointer; color: inherit; }
-    .story-container { display: flex; overflow-x: auto; gap: 10px; padding: 10px; border-bottom: 1px solid; }
+    .theme-toggle {
+      font-size: 20px; background: none; border: none; cursor: pointer; color: inherit;
+    }
+    .story-container {
+      display: flex; overflow-x: auto; gap: 10px; padding: 10px; border-bottom: 1px solid;
+    }
     body.light .story-container { background: #f2f2f2; border-color: #ccc; }
     body.dark .story-container { background: #111; border-color: #222; }
-    .story { flex: 0 0 auto; width: 120px; height: 180px; background: #ddd; border-radius: 8px; text-align: center; overflow: hidden; box-shadow: 0 0 6px rgba(0,0,0,0.1); transition: transform 0.2s ease; }
+    .story {
+      flex: 0 0 auto; width: 120px; height: 180px; background: #ddd; border-radius: 8px;
+      text-align: center; overflow: hidden; box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      display: flex; flex-direction: column;
+    }
     body.dark .story { background: #222; box-shadow: 0 0 6px rgba(255,255,255,0.1); }
     .story:hover { transform: scale(1.05); }
-    .story img { width: 100%; height: 80px; object-fit: cover; border-bottom: 1px solid #ccc; }
+    .story img {
+      width: 100%; height: 80px; object-fit: cover; border-bottom: 1px solid #ccc;
+      flex-shrink: 0;
+    }
     body.dark .story img { border-color: #444; }
-    .story p { padding: 5px; font-size: 13px; line-height: 1.2; height: 90px; overflow: hidden; }
-    .ad-box, .thread-box { margin: 10px; padding: 12px; border-radius: 4px; box-shadow: 0 0 8px rgba(0,0,0,0.05); }
+    .story p {
+      padding: 5px; font-size: 13px; line-height: 1.2; height: 90px;
+      overflow: hidden; flex-grow: 1;
+    }
+    .ad-box, .thread-box {
+      margin: 10px; padding: 12px; border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
     body.light .ad-box, body.light .thread-box { background: #eee; }
-    body.dark .ad-box, body.dark .thread-box { background: #111; box-shadow: 0 0 8px rgba(255,255,255,0.05); }
-    iframe { width: 100%; height: 500px; border: none; background: inherit; }
+    body.dark .ad-box, body.dark .thread-box {
+      background: #111; box-shadow: 0 0 8px rgba(255,255,255,0.05);
+    }
+    iframe {
+      width: 100%; height: 500px; border: none; background: inherit;
+    }
     a { color: #4ea1ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
     /* Sports card style */
@@ -38,6 +64,9 @@
       box-shadow: 0 0 6px rgba(0,0,0,0.1);
       text-align: center;
       transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 180px;
     }
     body.dark .sports-card {
       background: #222;
@@ -51,6 +80,7 @@
       height: 120px;
       object-fit: cover;
       border-bottom: 1px solid #ccc;
+      flex-shrink: 0;
     }
     body.dark .sports-card img {
       border-color: #444;
@@ -61,6 +91,7 @@
       line-height: 1.2;
       height: 60px;
       overflow: hidden;
+      flex-grow: 1;
     }
   </style>
 
@@ -160,7 +191,7 @@
       this.page.url = window.location.href;
       this.page.identifier = 'testagram';
     };
-    (function() {  // DON'T EDIT BELOW THIS LINE
+    (function() {
       var d = document, s = d.createElement('script');
       s.src = 'https://testagram.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
@@ -185,85 +216,127 @@
       'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
       'https://tech-ish.com/feed/',
       'https://www.nation.africa/kenya/business/rss',
-      'https://nairobinews.nation.africa/rss',
-      'https://sportsnewsfeed.com/rss'  // dummy, can be replaced by real sports feeds
+      'https://nairobinews.nation.africa/rss'
     ];
 
-    // Sports RSS feeds (add real ones here)
+    // Sports RSS feeds
     const sportsFeeds = [
-      'https://www.espn.com/espn/rss/news',            // ESPN general sports
-      'https://www.bbc.com/sport/football/rss.xml',   // BBC Football
-      'https://feeds.skynews.com/feeds/rss/sport.xml',// Sky Sports
-      'https://www.goal.com/en-us/feeds/news?fmt=rss',// Goal.com
-      'https://www.cbssports.com/rss/headlines/',     // CBS Sports
-      'https://www.nba.com/rss/nba_rss.xml'            // NBA RSS
+      'https://www.espn.com/espn/rss/news',
+      'https://www.bbc.com/sport/football/rss.xml',
+      'https://sports.yahoo.com/mlb/rss.xml',
+      'https://feeds.bbci.co.uk/sport/rss.xml',
+      'https://www.goal.com/en/feeds/news'
     ];
 
-    // Utility: Fetch and parse RSS using rss2json.com free API (no key)
-    async function fetchRSS(url) {
+    // Utility: Fetch JSON feed from rss2json.com proxy
+    async function fetchFeed(url) {
       try {
-        const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url);
-        const res = await fetch(api);
-        const json = await res.json();
-        if (json.status === 'ok') return json.items;
-        else return [];
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('Network error');
+        return await res.json();
       } catch (e) {
-        console.error('Failed to fetch RSS:', url, e);
-        return [];
+        console.warn('Failed to fetch feed:', url, e);
+        return null;
       }
     }
 
-    // Render stories horizontally in #stories container
+    // Use Microlink API to get thumbnail for an article URL fallback
+    async function getThumbnail(url) {
+      try {
+        const api = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=false&meta=true&embed=screenshot.url`;
+        const res = await fetch(api);
+        if (!res.ok) throw new Error('Microlink fetch error');
+        const data = await res.json();
+        return data.data?.image?.url || 'https://via.placeholder.com/120x80?text=No+Image';
+      } catch {
+        return 'https://via.placeholder.com/120x80?text=No+Image';
+      }
+    }
+
+    // Load stories and render to #stories container
     async function loadStories() {
       const container = document.getElementById('stories');
       container.innerHTML = '';
       document.getElementById('loading-stories').style.display = 'block';
 
+      let allItems = [];
       for (const feedUrl of feeds) {
-        const items = await fetchRSS(feedUrl);
-        items.slice(0,3).forEach(item => {
-          const story = document.createElement('div');
-          story.className = 'story';
-          story.setAttribute('role','listitem');
-          story.innerHTML = `
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
-              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/120x80?text=No+Image'}" alt="${item.title}" loading="lazy" />
-              <p>${item.title}</p>
-            </a>
-          `;
-          container.appendChild(story);
-        });
+        const feed = await fetchFeed(feedUrl);
+        if (feed && feed.status === 'ok') {
+          allItems = allItems.concat(feed.items);
+        }
+      }
+
+      // Sort all items by pubDate descending
+      allItems.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+      allItems = allItems.slice(0, 30); // show latest 30 items
+
+      for (const item of allItems) {
+        let thumb = item.thumbnail || item.enclosure?.link || item.enclosure?.url;
+        if (!thumb) {
+          thumb = await getThumbnail(item.link);
+        }
+
+        const story = document.createElement('article');
+        story.className = 'story';
+        story.setAttribute('role', 'listitem');
+        story.innerHTML = `
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="Read full article: ${item.title}">
+            <img src="${thumb}" alt="${item.title}" loading="lazy" />
+            <p>${item.title}</p>
+          </a>
+        `;
+        container.appendChild(story);
       }
 
       document.getElementById('loading-stories').style.display = 'none';
     }
 
-    // Render sports news grid
+    // Load sports stories and render in #sports-grid in 2 columns
     async function loadSports() {
       const container = document.getElementById('sports-grid');
       container.innerHTML = '';
+
+      let allItems = [];
       for (const feedUrl of sportsFeeds) {
-        const items = await fetchRSS(feedUrl);
-        items.slice(0,2).forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'sports-card';
-          card.setAttribute('role','listitem');
-          card.innerHTML = `
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
-              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/200x120?text=No+Image'}" alt="${item.title}" loading="lazy" />
-              <p>${item.title}</p>
-            </a>
-          `;
-          container.appendChild(card);
-        });
+        const feed = await fetchFeed(feedUrl);
+        if (feed && feed.status === 'ok') {
+          allItems = allItems.concat(feed.items);
+        }
+      }
+
+      // Sort by date descending, limit to 20 items
+      allItems.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+      allItems = allItems.slice(0, 20);
+
+      for (const item of allItems) {
+        let thumb = item.thumbnail || item.enclosure?.link || item.enclosure?.url;
+        if (!thumb) {
+          thumb = await getThumbnail(item.link);
+        }
+
+        const card = document.createElement('article');
+        card.className = 'sports-card';
+        card.setAttribute('role', 'listitem');
+        card.innerHTML = `
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="Read full sports article: ${item.title}">
+            <img src="${thumb}" alt="${item.title}" loading="lazy" />
+            <p>${item.title}</p>
+          </a>
+        `;
+        container.appendChild(card);
       }
     }
 
-    // Auto-refresh sports every 4 minutes
-    loadStories();
-    loadSports();
-    setInterval(loadSports, 4 * 60 * 1000);
+    // Load both stories and sports on page load
+    window.addEventListener('load', () => {
+      loadStories();
+      loadSports();
 
+      // Auto refresh sports every 4 minutes (240000 ms)
+      setInterval(loadSports, 240000);
+    });
   </script>
 </body>
 </html>
