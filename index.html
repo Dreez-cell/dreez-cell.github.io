@@ -1,205 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
-  <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
-  <title>Testagram</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: sans-serif; width: 100vw; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
-    body.light { background: #fff; color: #000; }
-    body.dark { background: #000; color: #fff; }
-    header { height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 20px; font-weight: bold; border-bottom: 1px solid; }
-    body.light header { background: #f9f9f9; color: #000; border-color: #ccc; }
-    body.dark header { background: #111; color: #fff; border-color: #222; }
-    .theme-toggle { font-size: 20px; background: none; border: none; cursor: pointer; color: inherit; }
-    .story-container { display: flex; overflow-x: auto; gap: 10px; padding: 10px; border-bottom: 1px solid; }
-    body.light .story-container { background: #f2f2f2; border-color: #ccc; }
-    body.dark .story-container { background: #111; border-color: #222; }
-    .story { flex: 0 0 auto; width: 120px; height: 180px; background: #ddd; border-radius: 8px; text-align: center; overflow: hidden; box-shadow: 0 0 6px rgba(0,0,0,0.1); transition: transform 0.2s ease; }
-    body.dark .story { background: #222; box-shadow: 0 0 6px rgba(255,255,255,0.1); }
-    .story:hover { transform: scale(1.05); }
-    .story img { width: 100%; height: 80px; object-fit: cover; border-bottom: 1px solid #ccc; }
-    body.dark .story img { border-color: #444; }
-    .story p { padding: 5px; font-size: 13px; line-height: 1.2; height: 90px; overflow: hidden; }
-    .ad-box, .thread-box { margin: 10px; padding: 12px; border-radius: 4px; box-shadow: 0 0 8px rgba(0,0,0,0.05); }
-    body.light .ad-box, body.light .thread-box { background: #eee; }
-    body.dark .ad-box, body.dark .thread-box { background: #111; box-shadow: 0 0 8px rgba(255,255,255,0.05); }
-    iframe { width: 100%; height: 500px; border: none; background: inherit; }
-    a { color: #4ea1ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    /* Sports card style */
-    .sports-card {
-      background: #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
-    body.dark .sports-card {
-      background: #222;
-      box-shadow: 0 0 6px rgba(255,255,255,0.1);
-    }
-    .sports-card:hover {
-      transform: scale(1.05);
-    }
-    .sports-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-bottom: 1px solid #ccc;
-    }
-    body.dark .sports-card img {
-      border-color: #444;
-    }
-    .sports-card p {
-      padding: 5px;
-      font-size: 13px;
-      line-height: 1.2;
-      height: 60px;
-      overflow: hidden;
-    }
-  </style>
-
-  <!-- AMP auto ads -->
-  <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
-
-  <!-- SEO Open Graph & Twitter -->
-  <meta property="og:title" content="Testagram - Your Trending News Hub" />
-  <meta property="og:description" content="Latest news stories from Kenya and the world, sports, entertainment, and more." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourdomain.com/" />
-  <meta property="og:image" content="https://yourdomain.com/icons/icon-512.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Testagram - Your Trending News Hub" />
-  <meta name="twitter:description" content="Latest news stories from Kenya and the world, sports, entertainment, and more." />
-  <meta name="twitter:image" content="https://yourdomain.com/icons/icon-512.png" />
-
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.ampproject.org https://pagead2.googlesyndication.com https://api.rss2json.com https://api.microlink.io https://jsonlink.io; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.ampproject.org https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src * data:;" />
-
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#000000" />
+  <!-- [unchanged content above] -->
 </head>
 <body>
-  <amp-auto-ads type="adsense" data-ad-client="ca-pub-6967873714106764"></amp-auto-ads>
+  <!-- [unchanged content above] -->  <div id="sports-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;" role="list" aria-label="Sports news stories"></div>  <script>
+    // [unchanged JavaScript code above]
 
-  <header role="banner" aria-label="Site Header">
-    <span>Testagram</span>
-    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
-  </header>
-
-  <!-- Loading indicator for stories -->
-  <div id="loading-stories" style="text-align:center; padding:10px;">Loading stories...</div>
-
-  <div id="stories" class="story-container" role="list" aria-label="News stories"></div>
-
-  <!-- Existing ads -->
-  <div class="ad-box" style="max-width: 300px; margin: 20px auto; text-align:center;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '18d0d482298d34bd3713b4a42c4121c6',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
-  </div>
-
-  <div class="ad-box" style="max-width: 300px; margin: 20px auto; text-align:center;">
-    <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
-  </div>
-
-  <!-- Trending iframe -->
-  <div class="thread-box" role="complementary" aria-label="Trending content">
-    <iframe src="https://dreez-cell.github.io/Trends/"></iframe>
-  </div>
-
-  <!-- Disqus comments -->
-  <div class="thread-box" role="region" aria-label="Comments section">
-    <div id="disqus_thread"></div>
-  </div>
-
-  <!-- Sports grid container -->
-  <div id="sports-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;" role="list" aria-label="Sports news stories"></div>
-
-  <script>
-    // Theme toggle with localStorage
-    function toggleTheme() {
-      if (document.body.classList.contains('dark')) {
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.body.classList.remove('light');
-        document.body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
-      updateToggleButton();
+    // Updated utility to fetch image from content if missing
+    function extractImageFromContent(content) {
+      const match = content.match(/<img[^>]+src\s*=\s*['"]([^'"]+)['"]/);
+      return match ? match[1] : null;
     }
-    function updateToggleButton() {
-      const btn = document.querySelector('.theme-toggle');
-      btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    // Apply saved theme or default to light
-    (function(){
-      const saved = localStorage.getItem('theme') || 'light';
-      document.body.classList.add(saved);
-      updateToggleButton();
-    })();
 
-    // Disqus embed code
-    var disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = 'testagram';
-    };
-    (function() {  // DON'T EDIT BELOW THIS LINE
-      var d = document, s = d.createElement('script');
-      s.src = 'https://testagram.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-
-    // Your original feeds array
-    const feeds = [
-      'https://www.capitalfm.co.ke/news/feed/',
-      'https://www.standardmedia.co.ke/rss/headlines.php',
-      'https://www.kenyanwallstreet.com/feed/',
-      'https://www.tuko.co.ke/rss/',
-      'https://www.ghafla.com/ke/feed/',
-      'https://www.nation.africa/kenya/rss',
-      'https://www.pd.co.ke/feed/',
-      'https://www.kenyan-post.com/feeds/posts/default',
-      'https://www.theeastafrican.co.ke/rss.xml',
-      'https://www.tuko.co.ke/rss/all.rss',
-      'https://www.kenyans.co.ke/feeds/news',
-      'https://citizen.digital/news/rss',
-      'https://www.businessdailyafrica.com/rss',
-      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
-      'https://tech-ish.com/feed/',
-      'https://www.nation.africa/kenya/business/rss',
-      'https://nairobinews.nation.africa/rss',
-      'https://sportsnewsfeed.com/rss'  // dummy, can be replaced by real sports feeds
-    ];
-
-    // Sports RSS feeds (add real ones here)
-    const sportsFeeds = [
-      'https://www.espn.com/espn/rss/news',            // ESPN general sports
-      'https://www.bbc.com/sport/football/rss.xml',   // BBC Football
-      'https://feeds.skynews.com/feeds/rss/sport.xml',// Sky Sports
-      'https://www.goal.com/en-us/feeds/news?fmt=rss',// Goal.com
-      'https://www.cbssports.com/rss/headlines/',     // CBS Sports
-      'https://www.nba.com/rss/nba_rss.xml'            // NBA RSS
-    ];
-
-    // Utility: Fetch and parse RSS using rss2json.com free API (no key)
     async function fetchRSS(url) {
       try {
         const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url);
@@ -213,7 +25,6 @@
       }
     }
 
-    // Render stories horizontally in #stories container
     async function loadStories() {
       const container = document.getElementById('stories');
       container.innerHTML = '';
@@ -222,12 +33,13 @@
       for (const feedUrl of feeds) {
         const items = await fetchRSS(feedUrl);
         items.slice(0,3).forEach(item => {
+          const img = item.thumbnail || item.enclosure?.link || extractImageFromContent(item.content) || 'https://via.placeholder.com/120x80?text=No+Image';
           const story = document.createElement('div');
           story.className = 'story';
           story.setAttribute('role','listitem');
           story.innerHTML = `
             <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
-              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/120x80?text=No+Image'}" alt="${item.title}" loading="lazy" />
+              <img src="${img}" alt="${item.title}" loading="lazy" />
               <p>${item.title}</p>
             </a>
           `;
@@ -238,19 +50,19 @@
       document.getElementById('loading-stories').style.display = 'none';
     }
 
-    // Render sports news grid
     async function loadSports() {
       const container = document.getElementById('sports-grid');
       container.innerHTML = '';
       for (const feedUrl of sportsFeeds) {
         const items = await fetchRSS(feedUrl);
         items.slice(0,2).forEach(item => {
+          const img = item.thumbnail || item.enclosure?.link || extractImageFromContent(item.content) || 'https://via.placeholder.com/200x120?text=No+Image';
           const card = document.createElement('div');
           card.className = 'sports-card';
           card.setAttribute('role','listitem');
           card.innerHTML = `
             <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
-              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/200x120?text=No+Image'}" alt="${item.title}" loading="lazy" />
+              <img src="${img}" alt="${item.title}" loading="lazy" />
               <p>${item.title}</p>
             </a>
           `;
@@ -259,11 +71,8 @@
       }
     }
 
-    // Auto-refresh sports every 4 minutes
     loadStories();
     loadSports();
     setInterval(loadSports, 4 * 60 * 1000);
-
-  </script>
-</body>
+  </script></body>
 </html>
