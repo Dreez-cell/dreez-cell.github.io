@@ -522,6 +522,12 @@
     border-radius: 10px;
   }
 </style>
-<!-- END SPORTS MAGAZINE SLIDER -->
+<!-- END SPORTS MAGAZINE SLIDER --><script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+      .catch(err => console.error('❌ Service Worker registration failed:', err));
+  }
+</script>
 </body>
 </html>
