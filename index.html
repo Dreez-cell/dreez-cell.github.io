@@ -330,24 +330,40 @@
       const themeToApply = saved || (prefersDark ? 'dark' : 'light');
       applyTheme(themeToApply);
     })();
-  </script><!-- Celebrity Gossip Magazine Section -->
+  <!-- Celebrity Gossip Magazine Section -->
 <style>
+  #celebrity-magazine-wrapper {
+    position: fixed;
+    bottom: 60px; /* adjust based on your bottom nav height */
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    max-height: 320px;
+    backdrop-filter: blur(8px);
+    padding: 8px;
+  }
+
   #celebrity-magazine {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, auto);
     gap: 12px;
-    padding: 16px;
+    padding: 12px;
     border-top: 1px solid;
+    border-radius: 10px;
+    overflow-y: auto;
   }
+
   body.light #celebrity-magazine {
     background: #f9f9f9;
     border-color: #ccc;
   }
+
   body.dark #celebrity-magazine {
     background: #111;
     border-color: #222;
   }
+
   #celebrity-magazine .story {
     background: #ddd;
     border-radius: 8px;
@@ -357,22 +373,27 @@
     display: flex;
     flex-direction: column;
   }
+
   body.dark #celebrity-magazine .story {
     background: #222;
     box-shadow: 0 0 6px rgba(255,255,255,0.1);
   }
+
   #celebrity-magazine .story:hover {
     transform: scale(1.05);
   }
+
   #celebrity-magazine .story img {
     width: 100%;
     height: 100px;
     object-fit: cover;
     border-bottom: 1px solid #ccc;
   }
+
   body.dark #celebrity-magazine .story img {
     border-color: #444;
   }
+
   #celebrity-magazine .story p {
     padding: 8px;
     font-size: 14px;
@@ -380,13 +401,31 @@
     flex-grow: 1;
     overflow: hidden;
   }
+
+  #close-celebrity-mag {
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    background: transparent;
+    color: #999;
+    border: none;
+  }
+
+  #close-celebrity-mag:hover {
+    color: red;
+  }
 </style>
 
-<div id="celebrity-magazine"></div>
+<div id="celebrity-magazine-wrapper">
+  <button id="close-celebrity-mag">×</button>
+  <div id="celebrity-magazine"></div>
+</div>
 
 <script>
   const gossipFeeds = [
-    'https://www.celebuzz.com/feed/',  
+    'https://www.celebuzz.com/feed/',
     'https://www.tmz.com/rss.xml',
     'https://www.eonline.com/syndication/feeds/rssfeeds/topstories.xml',
     'https://www.people.com/feeds/news',
@@ -398,7 +437,6 @@
     container.innerHTML = '';
 
     let count = 0;
-    // Limit total stories to 6 (3 columns x 2 rows)
     for (const feed of gossipFeeds) {
       if (count >= 6) break;
       try {
@@ -406,8 +444,25 @@
         const data = await res.json();
         for (let item of data.items) {
           if (count >= 6) break;
-          const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-          const img = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/150x100?text=No+Image';
+
+          let img = item.thumbnail;
+
+          if ((!img || img === '') && item.enclosure && item.enclosure.link) {
+            img = item.enclosure.link;
+          }
+
+          if ((!img || img === '') && item.content) {
+            const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch && imgMatch[1]) {
+              img = imgMatch[1];
+            }
+          }
+
+          // Microlink fallback
+          if (!img || img.includes('pixel') || img.includes('.gif') || img.includes('no_image')) {
+            img = `https://cdn.microlink.io/endpoint?url=${encodeURIComponent(item.link)}&meta=false&embed=image.url`;
+          }
+
           const div = document.createElement('div');
           div.className = 'story';
           div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">
@@ -424,7 +479,12 @@
   }
 
   loadCelebrityMagazine();
-  setInterval(loadCelebrityMagazine, 300000); // reload every 5 minutes
+  setInterval(loadCelebrityMagazine, 300000); // reload every 5 mins
+
+  // Close button functionality
+  document.getElementById('close-celebrity-mag').addEventListener('click', () => {
+    document.getElementById('celebrity-magazine-wrapper').style.display = 'none';
+  });
 </script>
 </body>
 </html>
