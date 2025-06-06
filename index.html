@@ -30,23 +30,76 @@
     iframe { width: 100%; height: 500px; border: none; background: inherit; }
     a { color: #4ea1ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    /* Sports card style */
+    .sports-card {
+      background: #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    body.dark .sports-card {
+      background: #222;
+      box-shadow: 0 0 6px rgba(255,255,255,0.1);
+    }
+    .sports-card:hover {
+      transform: scale(1.05);
+    }
+    .sports-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-bottom: 1px solid #ccc;
+    }
+    body.dark .sports-card img {
+      border-color: #444;
+    }
+    .sports-card p {
+      padding: 5px;
+      font-size: 13px;
+      line-height: 1.2;
+      height: 60px;
+      overflow: hidden;
+    }
   </style>
+
+  <!-- AMP auto ads -->
   <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
+
+  <!-- SEO Open Graph & Twitter -->
+  <meta property="og:title" content="Testagram - Your Trending News Hub" />
+  <meta property="og:description" content="Latest news stories from Kenya and the world, sports, entertainment, and more." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:image" content="https://yourdomain.com/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Testagram - Your Trending News Hub" />
+  <meta name="twitter:description" content="Latest news stories from Kenya and the world, sports, entertainment, and more." />
+  <meta name="twitter:image" content="https://yourdomain.com/icons/icon-512.png" />
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.ampproject.org https://pagead2.googlesyndication.com https://api.rss2json.com https://api.microlink.io https://jsonlink.io; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.ampproject.org https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src * data:;" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#000000" />
 </head>
 <body>
   <amp-auto-ads type="adsense" data-ad-client="ca-pub-6967873714106764"></amp-auto-ads>
-  
-  <header>
-    <span>Testagram</span>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-  </header>
-  
-  <div id="stories" class="story-container"></div>
 
-  <!-- Added sports grid container here -->
-  <div id="sports-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;"></div>
-  
+  <header role="banner" aria-label="Site Header">
+    <span>Testagram</span>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <!-- Loading indicator for stories -->
+  <div id="loading-stories" style="text-align:center; padding:10px;">Loading stories...</div>
+
+  <div id="stories" class="story-container" role="list" aria-label="News stories"></div>
+
+  <!-- Existing ads -->
   <div class="ad-box" style="max-width: 300px; margin: 20px auto; text-align:center;">
     <script type="text/javascript">
       atOptions = {
@@ -64,15 +117,57 @@
     <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
   </div>
 
-  <div class="thread-box">
+  <!-- Trending iframe -->
+  <div class="thread-box" role="complementary" aria-label="Trending content">
     <iframe src="https://dreez-cell.github.io/Trends/"></iframe>
   </div>
 
-  <div class="thread-box">
+  <!-- Disqus comments -->
+  <div class="thread-box" role="region" aria-label="Comments section">
     <div id="disqus_thread"></div>
   </div>
 
+  <!-- Sports grid container -->
+  <div id="sports-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;" role="list" aria-label="Sports news stories"></div>
+
   <script>
+    // Theme toggle with localStorage
+    function toggleTheme() {
+      if (document.body.classList.contains('dark')) {
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.body.classList.remove('light');
+        document.body.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      updateToggleButton();
+    }
+    function updateToggleButton() {
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    }
+    // Apply saved theme or default to light
+    (function(){
+      const saved = localStorage.getItem('theme') || 'light';
+      document.body.classList.add(saved);
+      updateToggleButton();
+    })();
+
+    // Disqus embed code
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = 'testagram';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://testagram.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+
+    // Your original feeds array
     const feeds = [
       'https://www.capitalfm.co.ke/news/feed/',
       'https://www.standardmedia.co.ke/rss/headlines.php',
@@ -91,154 +186,84 @@
       'https://tech-ish.com/feed/',
       'https://www.nation.africa/kenya/business/rss',
       'https://nairobinews.nation.africa/rss',
-      'https://www.kbc.co.ke/feed/'
+      'https://sportsnewsfeed.com/rss'  // dummy, can be replaced by real sports feeds
     ];
 
-    async function extractImageFromHTML(html) {
-      const match = html?.match(/<img[^>]+src=["']([^"']+)["']/);
-      return match ? match[1] : 'https://via.placeholder.com/120x80?text=No+Image';
-    }
+    // Sports RSS feeds (add real ones here)
+    const sportsFeeds = [
+      'https://www.espn.com/espn/rss/news',            // ESPN general sports
+      'https://www.bbc.com/sport/football/rss.xml',   // BBC Football
+      'https://feeds.skynews.com/feeds/rss/sport.xml',// Sky Sports
+      'https://www.goal.com/en-us/feeds/news?fmt=rss',// Goal.com
+      'https://www.cbssports.com/rss/headlines/',     // CBS Sports
+      'https://www.nba.com/rss/nba_rss.xml'            // NBA RSS
+    ];
 
-    async function getMicrolinkImage(url, fallbackHTML) {
+    // Utility: Fetch and parse RSS using rss2json.com free API (no key)
+    async function fetchRSS(url) {
       try {
-        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url);
+        const res = await fetch(api);
         const json = await res.json();
-        return json.data.image?.url || await extractImageFromHTML(fallbackHTML);
-      } catch {
-        return await extractImageFromHTML(fallbackHTML);
+        if (json.status === 'ok') return json.items;
+        else return [];
+      } catch (e) {
+        console.error('Failed to fetch RSS:', url, e);
+        return [];
       }
     }
 
+    // Render stories horizontally in #stories container
     async function loadStories() {
       const container = document.getElementById('stories');
       container.innerHTML = '';
-      for (const feed of feeds) {
-        try {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-          const data = await res.json();
-          for (let item of data.items.slice(0, 5)) {
-            const img = await getMicrolinkImage(item.link, item.content || item.description);
-            const div = document.createElement('div');
-            div.className = 'story';
-            div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"><img src="${img}" alt="story"><p>${item.title}</p></a>`;
-            container.appendChild(div);
-          }
-        } catch (err) {
-          console.error('Feed error:', feed, err);
-        }
+      document.getElementById('loading-stories').style.display = 'block';
+
+      for (const feedUrl of feeds) {
+        const items = await fetchRSS(feedUrl);
+        items.slice(0,3).forEach(item => {
+          const story = document.createElement('div');
+          story.className = 'story';
+          story.setAttribute('role','listitem');
+          story.innerHTML = `
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
+              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/120x80?text=No+Image'}" alt="${item.title}" loading="lazy" />
+              <p>${item.title}</p>
+            </a>
+          `;
+          container.appendChild(story);
+        });
       }
+
+      document.getElementById('loading-stories').style.display = 'none';
     }
 
-    loadStories();
-    setInterval(loadStories, 300000);
-
-    var disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = window.location.pathname;
-    };
-    (function () {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-
-    function applyTheme(theme) {
-      document.body.classList.remove('light', 'dark');
-      document.body.classList.add(theme);
-    }
-
-    function toggleTheme() {
-      const current = document.body.classList.contains('dark') ? 'dark' : 'light';
-      const newTheme = current === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
-    }
-
-    (function initializeTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        applyTheme(saved);
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(prefersDark ? 'dark' : 'light');
-      }
-    })();
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
-      authDomain: "teatagram-a3a8f.firebaseapp.com",
-      projectId: "teatagram-a3a8f",
-      storageBucket: "teatagram-a3a8f.appspot.com",
-      messagingSenderId: "835709485105",
-      appId: "1:835709485105:web:f70765b17d028e6e219510",
-      measurementId: "G-XF2WKT1TTE"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-
-  <script>
-    const sportsFeeds = [
-      'https://www.espn.com/espn/rss/news',
-      'https://feeds.bbci.co.uk/sport/rss.xml',
-      'https://www.skysports.com/rss/12040',
-      'https://www.nba.com/rss/nba_rss.xml',
-      'https://www.nfl.com/rss/rsslanding?searchString=home',
-      'https://www.goal.com/feeds/en/news',
-      'https://www.cafonline.com/rss',
-      'https://www.si.com/rss/si_topstories.rss'
-    ];
-
-    const PLACEHOLDER = "https://dreez-cell.github.io/icons/icon-512.png";
-
-    async function getMicrolinkImage(link, htmlContent) {
-      try {
-        const res = await fetch(`https://jsonlink.io/api/extract?url=${encodeURIComponent(link)}`);
-        const data = await res.json();
-        return data.images?.[0] || data.video?.image || PLACEHOLDER;
-      } catch {
-        const match = htmlContent?.match(/<img[^>]+src=["']([^"']+)["']/i);
-        return match?.[1] || PLACEHOLDER;
-      }
-    }
-
-    async function loadSportsGrid() {
+    // Render sports news grid
+    async function loadSports() {
       const container = document.getElementById('sports-grid');
       container.innerHTML = '';
-
-      const allItems = [];
-
-      for (const feed of sportsFeeds) {
-        try {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-          const data = await res.json();
-          if (!data.items) continue;
-          allItems.push(...data.items.slice(0, 1)); // Pull 1 item per feed to total ~8
-        } catch (err) {
-          console.error("Feed error:", feed, err);
-        }
-      }
-
-      for (const item of allItems.slice(0, 8)) {
-        const img = await getMicrolinkImage(item.link, item.content || item.description);
-        const card = document.createElement('div');
-        card.className = 'sports-card';
-        card.innerHTML = `
-          <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-            <img src="${img}" alt="${item.title}" loading="lazy" />
-            <p>${item.title}</p>
-          </a>`;
-        container.appendChild(card);
+      for (const feedUrl of sportsFeeds) {
+        const items = await fetchRSS(feedUrl);
+        items.slice(0,2).forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'sports-card';
+          card.setAttribute('role','listitem');
+          card.innerHTML = `
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="${item.title}">
+              <img src="${item.thumbnail || item.enclosure?.link || 'https://via.placeholder.com/200x120?text=No+Image'}" alt="${item.title}" loading="lazy" />
+              <p>${item.title}</p>
+            </a>
+          `;
+          container.appendChild(card);
+        });
       }
     }
 
-    loadSportsGrid();
-    setInterval(loadSportsGrid, 240000); // every 4 minutes
+    // Auto-refresh sports every 4 minutes
+    loadStories();
+    loadSports();
+    setInterval(loadSports, 4 * 60 * 1000);
+
   </script>
 </body>
 </html>
