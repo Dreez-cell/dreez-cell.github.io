@@ -288,8 +288,7 @@
             const img = await getMicrolinkImage(item.link, item.content || item.description);
             const div = document.createElement('div');
             div.className = 'story';
-            div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"><img src="${img}" alt="sports"><p>${item.title}</p></a>`;
-            container.appendChild(div);
+            div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${img}" alt="${item.title}"><p>${item.title}</p></a>`;
           }
         } catch (err) {
           console.error('Sports Feed error:', feed, err);
