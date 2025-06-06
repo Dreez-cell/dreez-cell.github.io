@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="google-adsense-account" content="ca-pub-6967873714106764">
+  <title>Testagram</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: sans-serif;
+      width: 100vw;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background: #fff;
+      color: #000;
+    }
+
+    body.dark {
+      background: #000;
+      color: #fff;
+    }
+
+    header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid;
+    }
+
+    body.light header {
+      background: #f9f9f9;
+      color: #000;
+      border-color: #ccc;
+    }
+
+    body.dark header {
+      background: #111;
+      color: #fff;
+      border-color: #222;
+    }
+
+    .theme-toggle {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid;
+    }
+
+    body.light .story-container {
+      background: #f2f2f2;
+      border-color: #ccc;
+    }
+
+    body.dark .story-container {
+      background: #111;
+      border-color: #222;
+    }
+
+    .story {
+      flex: 0 0 auto;
+      width: 120px;
+      height: 180px;
+      background: #ddd;
+      border-radius: 8px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    body.dark .story {
+      background: #222;
+      box-shadow: 0 0 6px rgba(255,255,255,0.1);
+    }
+
+    .story:hover {
+      transform: scale(1.05);
+    }
+
+    .story img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-bottom: 1px solid #ccc;
+    }
+
+    body.dark .story img {
+      border-color: #444;
+    }
+
+    .story p {
+      padding: 5px;
+      font-size: 13px;
+      line-height: 1.2;
+      height: 90px;
+      overflow: hidden;
+    }
+
+    .ad-box, .thread-box {
+      margin: 10px;
+      padding: 12px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    body.light .ad-box, body.light .thread-box {
+      background: #eee;
+    }
+
+    body.dark .ad-box, body.dark .thread-box {
+      background: #111;
+      box-shadow: 0 0 8px rgba(255,255,255,0.05);
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      background: inherit;
+    }
+
+    a {
+      color: #4ea1ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>Testagram</span>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <div id="stories" class="story-container"></div>
+
+  <div class="ad-box">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '18d0d482298d34bd3713b4a42c4121c6',
+        'format': 'iframe',
+        'height': 250,
+        'width': 300,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+  </div>
+
+  <div class="ad-box">
+    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+    <ins class="eas6a97888e2" data-zoneid="5144454"></ins> 
+    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  </div>
+
+  <div class="thread-box">
+    <iframe src="https://dreez-cell.github.io/Trends/"></iframe>
+  </div>
+
+  <div class="thread-box">
+    <div id="disqus_thread"></div>
+  </div>
+
+  <script>
+    const feeds = [
+      'https://www.capitalfm.co.ke/news/feed/',
+      'https://www.standardmedia.co.ke/rss/headlines.php',
+      'https://www.kenyanwallstreet.com/feed/',
+      'https://www.tuko.co.ke/rss/',
+      'https://www.ghafla.com/ke/feed/',
+      'https://www.nation.africa/kenya/rss',
+      'https://www.pd.co.ke/feed/',
+      'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml',
+      'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news',
+      'https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss',
+      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/',
+      'https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss',
+      'https://www.kbc.co.ke/feed/'
+    ];
+
+    async function extractImageFromHTML(html) {
+      const match = html?.match(/<img[^>]+src=["']([^"']+)["']/);
+      return match ? match[1] : 'https://via.placeholder.com/120x80?text=No+Image';
+    }
+
+    async function getMicrolinkImage(url, fallbackHTML) {
+      try {
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        return json.data.image?.url || await extractImageFromHTML(fallbackHTML);
+      } catch {
+        return await extractImageFromHTML(fallbackHTML);
+      }
+    }
+
+    async function loadStories() {
+      const container = document.getElementById('stories');
+      container.innerHTML = '';
+      for (const feed of feeds) {
+        try {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+          const data = await res.json();
+          for (let item of data.items.slice(0, 5)) {
+            const img = await getMicrolinkImage(item.link, item.content || item.description);
+            const div = document.createElement('div');
+            div.className = 'story';
+            div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"><img src="${img}" alt="story"><p>${item.title}</p></a>`;
+            container.appendChild(div);
+          }
+        } catch (err) {
+          console.error('Feed error:', feed, err);
+        }
+      }
+    }
+
+    loadStories();
+    setInterval(loadStories, 300000); // every 5 minutes
+
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
+    (function () {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+
+    // Theme detection and toggling
+    function applyTheme(theme) {
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.body.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    (function initializeTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        applyTheme(saved);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+      authDomain: "teatagram-a3a8f.firebaseapp.com",
+      projectId: "teatagram-a3a8f",
+      storageBucket: "teatagram-a3a8f.appspot.com",
+      messagingSenderId: "835709485105",
+      appId: "1:835709485105:web:f70765b17d028e6e219510",
+      measurementId: "G-XF2WKT1TTE"
+    };
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</body>
+</html>
