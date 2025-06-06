@@ -5,6 +5,372 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
   <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
+  
+  <title>Testagram - Trending News & More</title>
+  <meta name="description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta name="keywords" content="news, hip hop, sports, RSS, trending, Testagram" />
+  <meta name="author" content="Testagram Team" />
+  
+  <!-- AMP Auto Ads -->
+  <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 100vw;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+      background: #fff;
+      color: #000;
+      line-height: 1.4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 30px;
+    }
+    body.light { background: #fff; color: #000; }
+    body.dark { background: #121212; color: #eee; }
+    header {
+      height: 56px;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 22px;
+      font-weight: 700;
+      border-bottom: 1px solid;
+      background: inherit;
+      color: inherit;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    body.light header {
+      border-color: #ccc;
+    }
+    body.dark header {
+      border-color: #333;
+      box-shadow: 0 2px 8px rgb(255 255 255 / 0.1);
+    }
+    .theme-toggle {
+      font-size: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      transition: transform 0.2s ease;
+    }
+    .theme-toggle:hover {
+      transform: rotate(20deg);
+    }
+    main {
+      max-width: 1200px;
+      width: 100%;
+      padding: 15px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 14px;
+      padding: 10px 5px;
+      border-bottom: 1px solid;
+      scroll-behavior: smooth;
+    }
+    body.light .story-container {
+      background: #f8f8f8;
+      border-color: #ddd;
+    }
+    body.dark .story-container {
+      background: #222;
+      border-color: #444;
+    }
+    .story {
+      flex: 0 0 auto;
+      width: 140px;
+      height: 220px;
+      background: #eee;
+      border-radius: 8px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      color: inherit;
+    }
+    body.dark .story {
+      background: #2a2a2a;
+      box-shadow: 0 0 8px rgba(255,255,255,0.07);
+    }
+    .story:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 14px rgba(0,0,0,0.2);
+    }
+    .story a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .story img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-bottom: 1px solid #ccc;
+      flex-shrink: 0;
+      border-radius: 8px 8px 0 0;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.05));
+      transition: filter 0.3s ease;
+      loading: lazy;
+    }
+    body.dark .story img {
+      border-color: #555;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,0.1));
+    }
+    .story p {
+      padding: 8px 6px;
+      font-size: 14px;
+      line-height: 1.3;
+      height: 100px;
+      overflow: hidden;
+      flex-grow: 1;
+      text-align: left;
+      font-weight: 600;
+    }
+    .ad-box, .thread-box {
+      margin: 15px auto;
+      padding: 14px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 320px;
+      background: #fafafa;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark .ad-box, body.dark .thread-box {
+      background: #1a1a1a;
+      box-shadow: 0 0 12px rgba(255,255,255,0.07);
+      color: #ddd;
+    }
+    iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      background: inherit;
+      border-radius: 6px;
+    }
+    a {
+      color: #3a8ee6;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #2a6cc0;
+      text-decoration: underline;
+      outline: none;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 4px solid #ccc;
+      border-top: 4px solid #3a8ee6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .error-msg {
+      color: #b00020;
+      font-weight: 600;
+      text-align: center;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) {
+      .story {
+        width: 120px;
+        height: 190px;
+      }
+      .story p {
+        font-size: 13px;
+        height: 80px;
+      }
+      iframe {
+        height: 320px;
+      }
+      header {
+        font-size: 18px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AMP Auto Ads -->
+  <amp-auto-ads type="adsense" data-ad-client="ca-pub-6967873714106764"></amp-auto-ads>
+
+  <header>
+    <span>Testagram</span>
+    <button class="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle dark/light theme" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <main>
+
+    <!-- General News Stories -->
+    <section aria-labelledby="general-news-title">
+      <h2 id="general-news-title" style="margin-bottom: 8px;">General News</h2>
+      <div id="stories" class="story-container" aria-live="polite" aria-busy="false" role="list"></div>
+    </section>
+
+    <!-- HighPerformanceFormat Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '18d0d482298d34bd3713b4a42c4121c6',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+    </div>
+
+    <!-- Profitablerate CPM Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - Profitablerate CPM">
+      <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
+    </div>
+
+    <!-- Hip Hop Stories -->
+    <section aria-labelledby="hiphop-news-title">
+      <h2 id="hiphop-news-title" style="margin-bottom: 8px;">Hip Hop Stories</h2>
+      <div id="hiphop-carousel" class="story-container" aria-live="polite" aria-busy="false" role="list"></div>
+    </section>
+
+    <!-- Sports Magazine Slider Section -->
+    <section aria-labelledby="sports-magazine-title">
+      <h2 id="sports-magazine-title" style="margin-bottom: 8px;">Sports Magazine</h2>
+      <div id="rss-magazine" class="story-container" aria-live="polite" aria-busy="false" role="list"></div>
+    </section>
+
+    <!-- Embedded Trends iframe -->
+    <section aria-label="Trending topics iframe" style="max-width: 1200px;">
+      <div class="thread-box" role="region" aria-live="polite" aria-label="Embedded trending topics">
+        <iframe src="https://dreez-cell.github.io/Trends/" title="Trending Topics"></iframe>
+      </div>
+    </section>
+
+    <!-- Disqus Comments Section -->
+    <section aria-label="Comments" style="max-width: 1200px;">
+      <div class="thread-box" role="region">
+        <div id="disqus_thread"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // RSS Feeds URLs
+    const feeds = [
+      'https://www.capitalfm.co.ke/news/feed/',
+      'https://www.standardmedia.co.ke/rss/headlines.php',
+      'https://www.kenyanwallstreet.com/feed/',
+      'https://www.tuko.co.ke/rss/',
+      'https://www.ghafla.com/ke/feed/',
+      'https://www.nation.africa/kenya/rss',
+      'https://www.pd.co.ke/feed/',
+      'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml',
+      'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news',
+      'https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss',
+      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/',
+      'https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss',
+      'https://www.kbc.co.ke/feed/'
+    ];
+
+    const hiphopFeeds = [
+      'https://allhiphop.com/feed/',
+      'https://www.xxlmag.com/feed/',
+      'https://hiphopwired.com/feed/',
+      'https://hiphop-n-more.com/feed/',
+      'https://undergroundhiphopblog.com/feed/',
+      'https://thesource.com/feed/',
+      'https://ambrosiaforheads.com/feed/',
+      'https://rapindustry.com/feed/',
+      'https://dilemaradio.com/feed/',
+      'https://spiceonthebeat.com/feed/',
+      'https://uproxx.com/music/feed/',
+      'https://www.okayplayer.com/feed',
+      'https://hiphopvibe.com/feed/',
+      'https://djbooth.net/rss/all',
+      'https://rapzilla.com/feed/',
+      'https://hiphopgoldenage.com/feed/',
+      'https://rapradar.com/feed/',
+      'https://respectmyregion.com/feed/',
+      'https://siccness.net/rss.xml'
+    ];
+
+    const sportsFeeds = [
+      'https://www.espn.com/espn/rss/news',
+      'https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
+      'https://www.skysports.com/rss/12040',
+      'https://www.nba.com/rss/nba_rss.xml',
+      'https://www.nfl.com/rss/rsslanding?searchString=home',
+      'https://www.goal.com/feeds/en/news/africa/1',
+      'https://www.cafonline.com/rss',
+      'https://www.supersport.com/rss'
+    ];
+
+    // Utility: extract image from HTML string fallback
+    async function extractImageFromHTML(html) {
+      const match = html?.match(/<img[^>]+src=["']([^"']+)["']/);
+      return match ? match[1] : 'https://via.placeholder.com/140x100?text=No+Image';
+    }
+
+    // Utility: get image using Microlink API fallback to HTML content
+    async function getMicrolinkImage(url, fallbackHTML) {
+      try {
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        return json.data.image?.url || await extractImageFromHTML(fallbackHTML);
+      } catch {
+        return await extractImageFromHTML(fallbackHTML);
+      }
+    }
+
+    // Display loading spinner inside a container
+    function showLoading(container) {
+      container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
+      container.setAttribute('aria-busy', 'true');
+    }
+
+    // Display error message inside a container
+    function showError(container, msg = 'Failed to load feed. Please try again later<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
+  <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
   <title>Testagram</title>
 
   <!-- AMP Auto Ads -->
