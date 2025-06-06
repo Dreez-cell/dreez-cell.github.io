@@ -220,7 +220,23 @@
   </style>
 </head>
 <body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+    authDomain: "teatagram-a3a8f.firebaseapp.com",
+    projectId: "teatagram-a3a8f",
+    storageBucket: "teatagram-a3a8f.appspot.com", // ✅ FIXED
+    messagingSenderId: "835709485105",
+    appId: "1:835709485105:web:f70765b17d028e6e219510",
+    measurementId: "G-XF2WKT1TTE"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
   <!-- AMP Auto Ads -->
   <amp-auto-ads type="adsense" data-ad-client="ca-pub-6967873714106764"></amp-auto-ads>
 
