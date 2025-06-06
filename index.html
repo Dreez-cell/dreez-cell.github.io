@@ -1,178 +1,197 @@
-<!DOCTYPE html><html lang="en">
-<head><link rel="manifest" href="manifest.json">
-<meta name="description" content="Stay updated with trending news, hip hop, sports, and entertainment on Testagram.">
-<meta property="og:title" content="Testagram - Trending News & Entertainment">
-<meta property="og:description" content="Real-time news aggregator. Hip hop, sports, gossip & more.">
-<meta property="og:image" content="https://dreez-cell.github.io/icons/icon-512.png">
-<meta property="og:url" content="https://dreez-cell.github.io">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.ico">
-<meta name="theme-color" content="#000000">
-<script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
-<meta charset="UTF-8" />
-<meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="google-adsense-account" content="ca-pub-6967873714106764">
-<title>Testagram</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: sans-serif;
-    width: 100vw;
-    overflow-x: hidden;
-    transition: background 0.3s, color 0.3s;
-  }
-  body.light { background: #fff; color: #000; }
-  body.dark { background: #000; color: #fff; }
-  header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    font-size: 20px;
-    font-weight: bold;
-    border-bottom: 1px solid;
-  }
-  body.light header {
-    background: #f9f9f9;
-    color: #000;
-    border-color: #ccc;
-  }
-  body.dark header {
-    background: #111;
-    color: #fff;
-    border-color: #222;
-  }
-  .theme-toggle {
-    font-size: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: inherit;
-  }
-  .story-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid;
-  }
-  body.light .story-container {
-    background: #f2f2f2;
-    border-color: #ccc;
-  }
-  body.dark .story-container {
-    background: #111;
-    border-color: #222;
-  }
-  .story {
-    flex: 0 0 auto;
-    width: 120px;
-    height: 180px;
-    background: #ddd;
-    border-radius: 8px;
-    text-align: center;
-    overflow: hidden;
-    box-shadow: 0 0 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-  }
-  body.dark .story {
-    background: #222;
-    box-shadow: 0 0 6px rgba(255,255,255,0.1);
-  }
-  .story:hover { transform: scale(1.05); }
-  .story img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-bottom: 1px solid #ccc;
-  }
-  body.dark .story img { border-color: #444; }
-  .story p {
-    padding: 5px;
-    font-size: 13px;
-    line-height: 1.2;
-    height: 90px;
-    overflow: hidden;
-  }
-  .ad-box, .thread-box {
-    margin: 10px;
-    padding: 12px;
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
-  }
-  body.light .ad-box, body.light .thread-box {
-    background: #eee;
-  }
-  body.dark .ad-box, body.dark .thread-box {
-    background: #111;
-    box-shadow: 0 0 8px rgba(255,255,255,0.05);
-  }
-  iframe {
-    width: 100%;
-    height: 500px;
-    border: none;
-    background: inherit;
-  }
-  a {
-    color: #4ea1ff;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .sports-section {
-    margin: 20px;
-  }
-  .sports-section h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  .sports-slider {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  .sports-card {
-    flex: 0 1 calc(50% - 15px);
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .sports-card img {
-    width: 100%;
-    height: 130px;
-    object-fit: cover;
-  }
-  .sports-card p {
-    padding: 10px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #333;
-    margin: 0;
-  }
-  .sports-card a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async custom-element="amp-auto-ads"
+          src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764"
+          crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google-adsense-account" content="ca-pub-6967873714106764">
+
+  <!-- SEO meta tags -->
+  <meta name="description" content="Testagram - Your ultimate RSS news aggregator for Kenyan and African news, sports, and trends. Stay updated with fresh stories and engage with community comments." />
+  <meta property="og:title" content="Testagram - RSS News Aggregator" />
+  <meta property="og:description" content="Stay updated with Kenyan and African news, sports, and trends. Featuring dark/light mode, ads, and community comments." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:image" content="https://yourdomain.com/og-image.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Testagram - RSS News Aggregator" />
+  <meta name="twitter:description" content="Stay updated with Kenyan and African news, sports, and trends. Featuring dark/light mode, ads, and community comments." />
+  <meta name="twitter:image" content="https://yourdomain.com/twitter-image.jpg" />
+
+  <title>Testagram</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: sans-serif;
+      width: 100vw;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background: #fff;
+      color: #000;
+    }
+
+    body.dark {
+      background: #000;
+      color: #fff;
+    }
+
+    header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid;
+    }
+
+    body.light header {
+      background: #f9f9f9;
+      color: #000;
+      border-color: #ccc;
+    }
+
+    body.dark header {
+      background: #111;
+      color: #fff;
+      border-color: #222;
+    }
+
+    .theme-toggle {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid;
+    }
+
+    body.light .story-container {
+      background: #f2f2f2;
+      border-color: #ccc;
+    }
+
+    body.dark .story-container {
+      background: #111;
+      border-color: #222;
+    }
+
+    .story {
+      flex: 0 0 auto;
+      width: 120px;
+      height: 180px;
+      background: #ddd;
+      border-radius: 8px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    body.dark .story {
+      background: #222;
+      box-shadow: 0 0 6px rgba(255,255,255,0.1);
+    }
+
+    .story:hover {
+      transform: scale(1.05);
+    }
+
+    .story img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-bottom: 1px solid #ccc;
+      display: block;
+      /* Lazy loading will be handled in JS */
+    }
+
+    body.dark .story img {
+      border-color: #444;
+    }
+
+    .story p {
+      padding: 5px;
+      font-size: 13px;
+      line-height: 1.2;
+      height: 90px;
+      overflow: hidden;
+    }
+
+    .ad-box, .thread-box {
+      margin: 10px;
+      padding: 12px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    body.light .ad-box, body.light .thread-box {
+      background: #eee;
+    }
+
+    body.dark .ad-box, body.dark .thread-box {
+      background: #111;
+      box-shadow: 0 0 8px rgba(255,255,255,0.05);
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      background: inherit;
+    }
+
+    a {
+      color: #4ea1ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Loading spinner for stories */
+    #loading-spinner {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      color: #888;
+    }
+  </style>
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
   <amp-auto-ads type="adsense" data-ad-client="ca-pub-6967873714106764"></amp-auto-ads>
-  <header>
+
+  <header role="banner">
     <span>Testagram</span>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark theme">🌙</button>
   </header>
-  <div id="stories" class="story-container"></div>
-  <div id="hiphop-carousel" class="story-container"></div>
-  <div id="rss-magazine" class="story-container"></div>
-  <div class="thread-box"><iframe src="https://dreez-cell.github.io/Trends/"></iframe></div>
-  <div class="thread-box"><div id="disqus_thread"></div></div>
-  <!-- Ads -->
+
+  <main role="main">
+    <div id="loading-spinner" aria-live="polite" style="display:none;">Loading stories...</div>
+    <div id="stories" class="story-container" aria-live="polite" aria-busy="false"></div>
+  </main>
+
+  <!-- Custom Ad Block #1 -->
   <div class="ad-box" style="max-width: 300px; margin: 20px auto; text-align:center;">
     <script type="text/javascript">
       atOptions = {
@@ -185,71 +204,134 @@
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
   </div>
+
+  <!-- Custom Ad Block #2 -->
   <div class="ad-box" style="max-width: 300px; margin: 20px auto; text-align:center;">
     <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
   </div>
-  <!-- 🏆 SPORTS MAGAZINE SLIDER -->
-  <section class="sports-section">
-    <h2>🏆 Sports Magazine</h2>
-    <div id="sports-slider" class="sports-slider"></div>
-  </section>
+
+  <div class="thread-box" role="complementary" aria-label="Trending topics">
+    <iframe src="https://dreez-cell.github.io/Trends/" title="Trending topics"></iframe>
+  </div>
+
+  <div class="thread-box" role="region" aria-label="Comments section">
+    <div id="disqus_thread"></div>
+  </div>
+
   <script>
-    const sportsFeeds = [
-      'https://www.espn.com/espn/rss/news',
-      'https://feeds.bbci.co.uk/sport/rss.xml',
-      'https://www.skysports.com/rss/12040',
-      'https://www.nba.com/rss/nba_rss.xml',
-      'https://www.nfl.com/rss/rsslanding?searchString=home',
-      'https://www.goal.com/feeds/en/news',
-      'https://www.cafonline.com/rss',
-      'https://www.si.com/rss/si_topstories.rss'
+    const feeds = [
+      'https://www.capitalfm.co.ke/news/feed/',
+      'https://www.standardmedia.co.ke/rss/headlines.php',
+      'https://www.kenyanwallstreet.com/feed/',
+      'https://www.tuko.co.ke/rss/',
+      'https://www.ghafla.com/ke/feed/',
+      'https://www.nation.africa/kenya/rss',
+      'https://www.pd.co.ke/feed/',
+      'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml',
+      'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news',
+      'https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss',
+      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/',
+      'https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss',
+      'https://www.kbc.co.ke/feed/'
     ];
-    async function getMicrolinkImage(link, fallbackContent) {
+
+    async function extractImageFromHTML(html) {
+      const match = html?.match(/<img[^>]+src=["']([^"']+)["']/);
+      return match ? match[1] : 'https://via.placeholder.com/120x80?text=No+Image';
+    }
+
+    async function getMicrolinkImage(url, fallbackHTML) {
       try {
-        const response = await fetch(`https://jsonlink.io/api/extract?url=${encodeURIComponent(link)}`);
-        const data = await response.json();
-        return data.images?.[0] || data.video?.image || "https://dreez-cell.github.io/icons/icon-512.png";
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        return json.data.image?.url || await extractImageFromHTML(fallbackHTML);
       } catch {
-        const match = fallbackContent?.match(/<img.*?src=\"(.*?)\"/);
-        return match?.[1] || "https://dreez-cell.github.io/icons/icon-512.png";
+        return await extractImageFromHTML(fallbackHTML);
       }
     }
-    async function loadSportsSlider() {
-      const container = document.getElementById('sports-slider');
+
+    async function loadStories() {
+      const container = document.getElementById('stories');
+      const spinner = document.getElementById('loading-spinner');
+      spinner.style.display = 'block';
+      container.setAttribute('aria-busy', 'true');
       container.innerHTML = '';
-      for (const feed of sportsFeeds) {
-        try {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-          const data = await res.json();
-          for (let item of data.items.slice(0, 2)) {
-            const img = await getMicrolinkImage(item.link, item.content || item.description);
-            const card = document.createElement('div');
-            card.className = 'sports-card';
-            card.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"><img src="${img}" alt="${item.title}" loading="lazy" /><p>${item.title}</p></a>`;
-            container.appendChild(card);
+      try {
+        for (const feed of feeds) {
+          try {
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+            const data = await res.json();
+            for (let item of data.items.slice(0, 5)) {
+              const imgSrc = await getMicrolinkImage(item.link, item.content || item.description);
+              const div = document.createElement('div');
+              div.className = 'story';
+              // Use loading="lazy" for images, alt text from title
+              div.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer" aria-label="Read article: ${item.title}"><img loading="lazy" src="${imgSrc}" alt="${item.title}"><p>${item.title}</p></a>`;
+              container.appendChild(div);
+            }
+          } catch (err) {
+            console.error('Feed error:', feed, err);
+            // Append a simple error message inside container but continue loading others
+            const errorMsg = document.createElement('p');
+            errorMsg.style.color = 'red';
+            errorMsg.textContent = `Failed to load feed: ${feed}`;
+            container.appendChild(errorMsg);
           }
-        } catch (err) {
-          console.error('Sports Feed Error:', err);
         }
+      } finally {
+        spinner.style.display = 'none';
+        container.setAttribute('aria-busy', 'false');
       }
     }
-    loadSportsSlider();
-    setInterval(loadSportsSlider, 240000); // Refresh every 4 minutes
-  </script>
-  <script>
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.classList.contains("dark") ? "dark" : "light";
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      body.classList.remove(currentTheme);
-      body.classList.add(newTheme);
-      localStorage.setItem("theme", newTheme);
+
+    loadStories();
+    setInterval(loadStories, 300000); // every 5 minutes
+
+    // Disqus config remains unchanged
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
+    (function () {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+
+    function applyTheme(theme) {
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
     }
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem("theme") || "light";
-      document.body.classList.add(savedTheme);
-    });
+
+    function toggleTheme() {
+      const current = document.body.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      // Track theme toggle with Firebase Analytics if available
+      if(window.gtag) {
+        window.gtag('event', 'theme_toggle', { 'new_theme': newTheme });
+      }
+    }
+
+    (function initializeTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        applyTheme(saved);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+    })();
   </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
@@ -265,134 +347,18 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
   </script>
+
+  <!-- Register service worker for PWA -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log('SW registered:', reg.scope))
-          .catch(err => console.error('SW registration failed:', err));
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+          console.log('ServiceWorker registered with scope:', registration.scope);
+        }).catch(error => {
+          console.log('ServiceWorker registration failed:', error);
+        });
       });
     }
-  </script><!-- 🏆 SPORTS MAGAZINE SLIDER -->
-<section class="sports-section">
-  <h2>🏆 Sports Magazine</h2>
-  <div id="sports-slider" class="sports-grid"></div>
-</section>
-
-<script>
-  const sportsFeeds = [
-    'https://www.espn.com/espn/rss/news',
-    'https://feeds.bbci.co.uk/sport/rss.xml',
-    'https://www.skysports.com/rss/12040',
-    'https://www.nba.com/rss/nba_rss.xml',
-    'https://www.nfl.com/rss/rsslanding?searchString=home',
-    'https://www.goal.com/feeds/en/news',
-    'https://www.cafonline.com/rss',
-    'https://www.si.com/rss/si_topstories.rss'
-  ];
-
-  async function getMicrolinkImage(link, fallbackContent) {
-    try {
-      const response = await fetch(`https://jsonlink.io/api/extract?url=${encodeURIComponent(link)}`);
-      const data = await response.json();
-      return data.images?.[0] || data.video?.image || "https://dreez-cell.github.io/icons/icon-512.png";
-    } catch {
-      const match = fallbackContent?.match(/<img.*?src="(.*?)"/);
-      return match?.[1] || "https://dreez-cell.github.io/icons/icon-512.png";
-    }
-  }
-
-  async function loadSportsSlider() {
-    const container = document.getElementById('sports-slider');
-    container.innerHTML = '';
-
-    for (const feed of sportsFeeds) {
-      try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-        const data = await res.json();
-
-        for (let item of data.items.slice(0, 2)) {
-          const img = await getMicrolinkImage(item.link, item.content || item.description);
-          const card = document.createElement('div');
-          card.className = 'sports-card';
-
-          card.innerHTML = `
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-              <img src="${img}" alt="${item.title}" loading="lazy" />
-              <p>${item.title}</p>
-            </a>`;
-
-          container.appendChild(card);
-        }
-      } catch (err) {
-        console.error('Sports Feed Error:', err);
-      }
-    }
-  }
-
-  loadSportsSlider();
-  setInterval(loadSportsSlider, 240000); // 4 minutes
-</script>
-
-<style>
-  .sports-section {
-    margin: 30px 10px;
-  }
-
-  .sports-section h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .sports-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .sports-card {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
-
-  body.dark .sports-card {
-    background: #1c1c1c;
-    box-shadow: 0 2px 6px rgba(255,255,255,0.05);
-  }
-
-  .sports-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .sports-card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
-
-  .sports-card p {
-    padding: 10px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #333;
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  body.dark .sports-card p {
-    color: #eee;
-  }
-
-  .sports-card a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-</style>
-<!-- END SPORTS MAGAZINE SLIDER -->
+  </script>
 </body>
 </html>
