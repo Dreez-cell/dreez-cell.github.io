@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
+<head><script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+    authDomain: "teatagram-a3a8f.firebaseapp.com",
+    projectId: "teatagram-a3a8f",
+    storageBucket: "teatagram-a3a8f.firebasestorage.app",
+    messagingSenderId: "835709485105",
+    appId: "1:835709485105:web:f70765b17d028e6e219510",
+    measurementId: "G-XF2WKT1TTE"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
   <!-- Meta & SEO -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
