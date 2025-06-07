@@ -37,7 +37,7 @@
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     img-src * data:;
-    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://celebrity-gossip-3.disqus.com https://pl22779142.profitableratecpm.com https://www.highperformanceformat.com;
+    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://pl22779142.profitableratecpm.com https://www.highperformanceformat.com;
     style-src 'self' 'unsafe-inline';
     frame-src *;
     connect-src *;
@@ -360,10 +360,10 @@
         <div id="sports-row1" class="story-container-row" role="list"></div>
         <div id="sports-row2" class="story-container-row" role="list"></div>
       </div>
-      <!-- Disqus Comments Section: moved directly below sports carousel -->
-      <div class="thread-box" role="region" aria-label="Sports Comments" style="margin-top:32px;">
+      <!-- Disqus Comments Section: removed as requested -->
+      <!-- <div class="thread-box" role="region" aria-label="Sports Comments" style="margin-top:32px;">
         <div id="disqus_thread"></div>
-      </div>
+      </div> -->
     </section>
     <!-- Embedded Trends iframe -->
     <section aria-label="Trending topics iframe" style="max-width: 1200px;">
@@ -589,18 +589,6 @@
     setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
     setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
 
-    // --- DISQUS ---
-    var disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = window.location.pathname;
-    };
-    (function () {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-
     // --- THEME SWITCH ---
     function applyTheme(theme) {
       document.body.classList.remove('light', 'dark');
@@ -621,8 +609,8 @@
       applyTheme(themeToApply);
     })();
   </script>
-  <!-- Disqus Comment Count Script -->
-  <script id="dsq-count-scr" src="//celebrity-gossip-3.disqus.com/count.js" async></script>
-  <noscript style="color:#c0392b;text-align:center;display:block;">Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" style="color:#2980b9;">comments powered by Disqus.</a></noscript>
+  <!-- Disqus Comment Count Script (REMOVED) -->
+  <!-- <script id="dsq-count-scr" src="//celebrity-gossip-3.disqus.com/count.js" async></script> -->
+  <!-- <noscript style="color:#c0392b;text-align:center;display:block;">Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" style="color:#2980b9;">comments powered by Disqus.</a></noscript> -->
 </body>
 </html>
