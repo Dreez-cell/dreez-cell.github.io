@@ -107,7 +107,6 @@
       top: 10px;
       outline: 2px solid var(--primary);
     }
-    /* --- MAIN LAYOUT --- */
     .layout {
       display: flex;
       flex-direction: row;
@@ -243,7 +242,6 @@
       color: inherit;
       letter-spacing: -.3px;
     }
-    /* --- SIDEBAR --- */
     .ad-box, .thread-box {
       margin: 0 0 12px 0;
       padding: 18px 16px;
@@ -261,7 +259,6 @@
       box-shadow: 0 0 16px rgba(255,255,255,0.09);
       color: #ddd;
     }
-    /* --- DISQUS SECTION --- */
     .disqus-section {
       background: #fff;
       border-radius: var(--radius);
@@ -287,7 +284,6 @@
       color: var(--primary-hover);
       letter-spacing: -.5px;
     }
-    /* --- TRENDS IFRAME --- */
     .trends-box {
       margin: 36px 0 0 0;
       padding: 12px 0 10px 0;
@@ -420,7 +416,6 @@
     </div>
     <aside class="sidebar" aria-label="Sidebar">
       <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
-        <!-- Example Ad -->
         <script type="text/javascript">
           var atOptions = {
             'key' : '18d0d482298d34bd3713b4a42c4121c6',
@@ -438,6 +433,7 @@
     </aside>
   </div>
   <script>
+    // --- Feed URLs ---
     const feeds = [
       'https://www.capitalfm.co.ke/news/feed/',
       'https://www.standardmedia.co.ke/rss/headlines.php',
@@ -490,8 +486,8 @@
       'https://www.sportsnet.ca/feed/'
     ];
 
+    // --- Thumbnail Fetching ---
     async function getBestThumbnail(item) {
-      // 1. Try Microlink for the article link
       try {
         const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(item.link)}&meta=true`);
         const json = await res.json();
@@ -500,16 +496,13 @@
           (json?.data?.logo?.url && /\.(jpe?g|png|webp|gif)$/i.test(json.data.logo.url) ? json.data.logo.url : null) ||
           (json?.data?.meta?.image && /\.(jpe?g|png|webp|gif)$/i.test(json.data.meta.image) ? json.data.meta.image : null);
         if (imgUrl) return imgUrl;
-      } catch (e) {}
-      // 2. Try RSS enclosure
+      } catch {}
       if (item.enclosure && item.enclosure.link && /\.(jpe?g|png|webp|gif)$/i.test(item.enclosure.link)) {
         return item.enclosure.link;
       }
-      // 3. Try RSS thumbnail
       if (item.thumbnail && /\.(jpe?g|png|webp|gif)$/i.test(item.thumbnail)) {
         return item.thumbnail;
       }
-      // 4. Try extracting from HTML as a last resort
       try {
         const doc = new DOMParser().parseFromString(item.content || item.description || '', "text/html");
         const ogImg = doc.querySelector('meta[property="og:image"], meta[name="og:image"]');
@@ -517,10 +510,10 @@
         const imgEl = doc.querySelector('img');
         if (imgEl && imgEl.src) return imgEl.src;
       } catch {}
-      // 5. Default placeholder
       return 'https://via.placeholder.com/140x100?text=News';
     }
 
+    // --- Utility: Show loading and error states ---
     function showLoading(container) {
       container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
       container.setAttribute('aria-busy', 'true');
@@ -534,6 +527,7 @@
       container.setAttribute('aria-busy', 'false');
     }
 
+    // --- Utility: Create story card ---
     function createStoryDiv(story) {
       const div = document.createElement('div');
       div.className = 'story';
@@ -550,63 +544,115 @@
       return div;
     }
 
+    // --- Responsive slice count for each carousel ---
+    function getSliceCount(base, min) {
+      if (window.innerWidth < 400) return Math.max(min, base - 2);
+      if (window.innerWidth < 700) return Math.max(min, base - 1);
+      return base;
+    }
+
+    // --- Feed Loader: parallel, fills rows on-the-fly, robust for sports ---
     async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt) {
       const row1 = document.getElementById(row1Id);
       const row2 = document.getElementById(row2Id);
       if (!row1 || !row2) return;
-      showLoading(row1);
-      showLoading(row2);
       row1.innerHTML = '';
       row2.innerHTML = '';
-      let loadedAny = false;
+      showLoading(row1);
+      showLoading(row2);
+
       let allStories = [];
-      for (let feed of feedList) {
+      let displayedLinks = new Set();
+      let loadedAny = false;
+
+      // Helper to display as soon as a new story batch comes in
+      function displayStories(batch) {
+        allStories.push(...batch.filter(story =>
+          story.title && story.link && !displayedLinks.has(story.link)
+        ));
+        allStories = allStories.slice(0, sliceCount * 2);
+        allStories.forEach(s => displayedLinks.add(s.link));
+        // Split into two rows
+        const half = Math.ceil(allStories.length / 2);
+        const row1Stories = allStories.slice(0, half);
+        const row2Stories = allStories.slice(half);
+        row1.innerHTML = '';
+        row2.innerHTML = '';
+        for (let story of row1Stories) row1.appendChild(createStoryDiv(story));
+        for (let story of row2Stories) row2.appendChild(createStoryDiv(story));
+        row1.setAttribute('aria-busy', 'false');
+        row2.setAttribute('aria-busy', 'false');
+      }
+
+      // Parallel fetch, race to first batches
+      await Promise.all(feedList.map(async feed => {
         try {
           const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
           if (!res.ok) throw new Error('Request failed');
           const data = await res.json();
           if (!data.items || !Array.isArray(data.items) || data.items.length === 0) throw new Error('Invalid/empty RSS data');
           const items = data.items.slice(0, sliceCount).filter(item => item && item.title && item.link);
-          for (let item of items) {
-            const img = await getBestThumbnail(item);
-            allStories.push({
-              link: item.link,
-              title: item.title,
-              img
-            });
+          const thumbBatch = await Promise.all(items.map(async item => ({
+            link: item.link,
+            title: item.title,
+            img: await getBestThumbnail(item)
+          })));
+          if (thumbBatch.length > 0) {
             loadedAny = true;
+            displayStories(thumbBatch);
           }
         } catch (err) {
-          console.error(`${alt} Feed error:`, feed, err);
+          // Ignore here, error shown if all fail
         }
+      }));
+
+      // --- Sports carousel fix: ensure enough stories for two rows ---
+      if (alt === 'sports' && allStories.length < sliceCount * 2) {
+        // Try to fill with more stories from the same feeds, up to double the needed count
+        let extraStories = [];
+        for (let feed of feedList) {
+          try {
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+            const data = await res.json();
+            for (let item of (data.items || [])) {
+              if (!allStories.some(s => s.link === item.link) && !extraStories.some(s => s.link === item.link)) {
+                const img = await getBestThumbnail(item);
+                extraStories.push({ link: item.link, title: item.title, img });
+              }
+              if (allStories.length + extraStories.length >= sliceCount * 2) break;
+            }
+          } catch {}
+          if (allStories.length + extraStories.length >= sliceCount * 2) break;
+        }
+        allStories.push(...extraStories.slice(0, sliceCount * 2 - allStories.length));
+        // re-display
+        displayStories([]);
       }
-      allStories = allStories.filter((s, i, arr) => arr.findIndex(e => e.link === s.link) === i);
-      const half = Math.ceil(allStories.length / 2);
-      const row1Stories = allStories.slice(0, half);
-      const row2Stories = allStories.slice(half);
-      for (let story of row1Stories) row1.appendChild(createStoryDiv(story));
-      for (let story of row2Stories) row2.appendChild(createStoryDiv(story));
-      if (!loadedAny) {
+
+      // Show error if nothing loaded
+      if (!loadedAny && allStories.length === 0) {
         showError(row1, `All ${alt} feeds failed to load.`);
         showError(row2, `All ${alt} feeds failed to load.`);
-      } else if (allStories.length < feedList.length * sliceCount) {
-        showError(row1, `Some ${alt} feeds failed to load.`);
-        showError(row2, `Some ${alt} feeds failed to load.`);
+      } else if (allStories.length < sliceCount * 2) {
+        showError(row1, `Some ${alt} feeds failed to load or not enough stories available.`);
+        showError(row2, `Some ${alt} feeds failed to load or not enough stories available.`);
       }
-      row1.setAttribute('aria-busy', 'false');
-      row2.setAttribute('aria-busy', 'false');
     }
 
+    // --- Reload all carousels, adaptive per screen size ---
     function reloadAll() {
-      loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story');
-      loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop');
-      loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports');
+      loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story');
+      loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop');
+      // For sports, try to show more items on wide screens (e.g. 4 per row, total 8)
+      loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports');
     }
+    window.addEventListener('resize', reloadAll);
     reloadAll();
-    setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story'), 300000);
-    setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
-    setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
+    setInterval(() => loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story'), 300000);
+    setInterval(() => loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
+    setInterval(() => loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports'), 240000);
 
+    // --- Disqus comments widget ---
     var disqus_config = function () {
       this.page.url = window.location.href;
       this.page.identifier = window.location.pathname;
@@ -618,6 +664,7 @@
       (d.head || d.body).appendChild(s);
     })();
 
+    // --- Theme logic ---
     function applyTheme(theme) {
       document.body.classList.remove('light', 'dark');
       document.body.classList.add(theme);
