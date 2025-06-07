@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!-- Meta & SEO -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
+  <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
+  <title>Testagram - Trending News & More</title>
+  <meta name="description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta name="keywords" content="news, hip hop, sports, RSS, trending, Testagram" />
+  <meta name="author" content="Testagram Team" />
+  <!-- Open Graph & Twitter Cards -->
+  <meta property="og:title" content="Testagram - Trending News & More" />
+  <meta property="og:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreez-cell.github.io/" />
+  <meta property="og:image" content="https://dreez-cell.github.io/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Testagram - Trending News & More" />
+  <meta name="twitter:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta name="twitter:image" content="https://dreez-cell.github.io/preview.png" />
+
+  <!-- Canonical for SEO -->
+  <link rel="canonical" href="https://dreez-cell.github.io/" />
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="https://dreez-cell.github.io/apple-touch-icon.png">
+  <!-- Favicon -->
+  <link rel="icon" href="https://dreez-cell.github.io/favicon.ico" type="image/x-icon" />
+  <!-- Preconnect & DNS Prefetch -->
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://www.gstatic.com">
+  <link rel="dns-prefetch" href="https://api.rss2json.com">
+  <link rel="dns-prefetch" href="https://api.microlink.io">
+  <!-- CSP for security -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src * data:;
+    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://celebrity-gossip-3.disqus.com https://pl22779142.profitableratecpm.com https://www.highperformanceformat.com;
+    style-src 'self' 'unsafe-inline';
+    frame-src *;
+    connect-src *;
+  ">
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
+  <!-- Accessibility & Responsive CSS -->
+  <style>
+    :root {
+      --primary: #3a8ee6;
+      --primary-hover: #2a6cc0;
+      --border-light: #ccc;
+      --border-dark: #333;
+      --bg-light: #fff;
+      --bg-dark: #121212;
+      --container-max: 1200px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-width: 100vw;
+      overflow-x: hidden;
+      background: var(--bg-light);
+      color: #000;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light { background: var(--bg-light); color: #000; }
+    body.dark { background: var(--bg-dark); color: #eee; }
+    header {
+      height: 56px;
+      width: 100%;
+      max-width: var(--container-max);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 22px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-light);
+      background: inherit;
+      color: inherit;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    body.dark header {
+      border-color: var(--border-dark);
+      box-shadow: 0 2px 8px rgb(255 255 255 / 0.1);
+    }
+    .theme-toggle {
+      font-size: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      transition: transform 0.2s ease;
+      outline: none;
+    }
+    .theme-toggle:focus-visible { outline: 2px solid var(--primary); }
+    .theme-toggle:hover { transform: rotate(20deg); }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: #fff;
+      color: #222;
+      padding: 8px 16px;
+      z-index: 9999;
+      border-radius: 0 0 5px 5px;
+      font-weight: bold;
+    }
+    .skip-link:focus {
+      left: 10px;
+      top: 10px;
+      outline: 2px solid var(--primary);
+    }
+    main {
+      max-width: var(--container-max);
+      width: 100%;
+      padding: 15px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    section > h2 {
+      margin-bottom: 8px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+    /* --- Carousel 2-row layout --- */
+    .carousel-2row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .carousel-2row .story-container-row {
+      display: flex;
+      overflow-x: auto;
+      gap: 14px;
+      padding: 10px 5px 0 5px;
+      border-bottom: none;
+      scroll-behavior: smooth;
+      min-height: 0;
+    }
+    /* Remove bottom border for rows except last in carousel */
+    .carousel-2row .story-container-row:last-child {
+      border-bottom: 1px solid var(--border-light);
+    }
+    body.dark .carousel-2row .story-container-row:last-child {
+      border-color: #444;
+    }
+    body.light .carousel-2row .story-container-row:last-child {
+      border-color: #ddd;
+    }
+    .story {
+      flex: 0 0 auto;
+      width: 140px;
+      height: 220px;
+      background: #eee;
+      border-radius: 8px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+    }
+    body.dark .story {
+      background: #2a2a2a;
+      box-shadow: 0 0 8px rgba(255,255,255,0.07);
+    }
+    .story:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 14px rgba(0,0,0,0.2);
+    }
+    .story a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .story img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-bottom: 1px solid #ccc;
+      flex-shrink: 0;
+      border-radius: 8px 8px 0 0;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.05));
+      transition: filter 0.3s;
+    }
+    body.dark .story img {
+      border-color: #555;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,0.1));
+    }
+    .story p {
+      padding: 8px 6px;
+      font-size: 14px;
+      line-height: 1.3;
+      height: 100px;
+      overflow: hidden;
+      flex-grow: 1;
+      text-align: left;
+      font-weight: 600;
+    }
+    .ad-box, .thread-box {
+      margin: 15px auto;
+      padding: 14px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 320px;
+      background: #fafafa;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark .ad-box, body.dark .thread-box {
+      background: #1a1a1a;
+      box-shadow: 0 0 12px rgba(255,255,255,0.07);
+      color: #ddd;
+    }
+    iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      background: inherit;
+      border-radius: 6px;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover, a:focus {
+      color: var(--primary-hover);
+      text-decoration: underline;
+      outline: none;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 4px solid #ccc;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error-msg {
+      color: #b00020;
+      font-weight: 600;
+      text-align: center;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) {
+      .story { width: 120px; height: 190px; }
+      .story p { font-size: 13px; height: 80px; }
+      iframe { height: 320px; }
+      header { font-size: 18px; height: 48px; }
+      .carousel-2row .story-container-row { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <noscript>
+    <div style="color: red; text-align: center;">
+      JavaScript is required for the full experience. Please enable it in your browser.
+    </div>
+  </noscript>
+  <header>
+    <span>Testagram</span>
+    <button class="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle dark/light theme" onclick="toggleTheme()">🌙</button>
+  </header>
+  <main id="main" role="main">
+    <!-- General News Stories -->
+    <section aria-labelledby="general-news-title">
+      <h2 id="general-news-title">General News</h2>
+      <div id="stories-carousel" class="carousel-2row" aria-live="polite" aria-busy="false" role="region">
+        <div id="stories-row1" class="story-container-row" role="list"></div>
+        <div id="stories-row2" class="story-container-row" role="list"></div>
+      </div>
+    </section>
+    <!-- HighPerformanceFormat Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
+      <script type="text/javascript">
+        var atOptions = {
+          'key' : '18d0d482298d34bd3713b4a42c4121c6',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+    </div>
+    <!-- Profitablerate CPM Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - Profitablerate CPM">
+      <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
+    </div>
+    <!-- Hip Hop Stories -->
+    <section aria-labelledby="hiphop-news-title">
+      <h2 id="hiphop-news-title">Hip Hop Stories</h2>
+      <div id="hiphop-carousel" class="carousel-2row" aria-live="polite" aria-busy="false" role="region">
+        <div id="hiphop-row1" class="story-container-row" role="list"></div>
+        <div id="hiphop-row2" class="story-container-row" role="list"></div>
+      </div>
+    </section>
+    <!-- Sports Magazine Slider Section -->
+    <section aria-labelledby="sports-magazine-title">
+      <h2 id="sports-magazine-title">Sports Magazine</h2>
+      <div id="sports-carousel" class="carousel-2row" aria-live="polite" aria-busy="false" role="region">
+        <div id="sports-row1" class="story-container-row" role="list"></div>
+        <div id="sports-row2" class="story-container-row" role="list"></div>
+      </div>
+    </section>
+    <!-- Embedded Trends iframe -->
+    <section aria-label="Trending topics iframe" style="max-width: 1200px;">
+      <div class="thread-box" role="region" aria-live="polite" aria-label="Embedded trending topics">
+        <iframe src="https://dreez-cell.github.io/Trends/" title="Trending Topics" loading="lazy"></iframe>
+      </div>
+    </section>
+    <!-- Disqus Comments Section -->
+    <section aria-label="Comments" style="max-width: 1200px;">
+      <div class="thread-box" role="region">
+        <div id="disqus_thread"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Firebase Analytics -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+      authDomain: "teatagram-a3a8f.firebaseapp.com",
+      projectId: "teatagram-a3a8f",
+      storageBucket: "teatagram-a3a8f.appspot.com",
+      messagingSenderId: "835709485105",
+      appId: "1:835709485105:web:f70765b17d028e6e219510",
+      measurementId: "G-XF2WKT1TTE"
+    };
+    try {
+      const app = initializeApp(firebaseConfig);
+      getAnalytics(app);
+    } catch(e) {
+      console.warn('Firebase Analytics could not be initialized:', e);
+    }
+  </script>
+
+  <script>
+    // --- FEEDS ---
+    const feeds = [
+      'https://www.capitalfm.co.ke/news/feed/',
+      'https://www.standardmedia.co.ke/rss/headlines.php',
+      'https://www.kenyanwallstreet.com/feed/',
+      'https://www.tuko.co.ke/rss/',
+      'https://www.ghafla.com/ke/feed/',
+      'https://www.nation.africa/kenya/rss',
+      'https://www.pd.co.ke/feed/',
+      'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml',
+      'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news',
+      'https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss',
+      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/',
+      'https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss',
+      'https://www.kbc.co.ke/feed/'
+    ];
+    const hiphopFeeds = [
+      'https://allhiphop.com/feed/',
+      'https://www.xxlmag.com/feed/',
+      'https://hiphopwired.com/feed/',
+      'https://hiphop-n-more.com/feed/',
+      'https://undergroundhiphopblog.com/feed/',
+      'https://thesource.com/feed/',
+      'https://ambrosiaforheads.com/feed/',
+      'https://rapindustry.com/feed/',
+      'https://dilemaradio.com/feed/',
+      'https://spiceonthebeat.com/feed/',
+      'https://uproxx.com/music/feed/',
+      'https://www.okayplayer.com/feed',
+      'https://hiphopvibe.com/feed/',
+      'https://djbooth.net/rss/all',
+      'https://rapzilla.com/feed/',
+      'https://hiphopgoldenage.com/feed/',
+      'https://rapradar.com/feed/',
+      'https://respectmyregion.com/feed/',
+      'https://siccness.net/rss.xml'
+    ];
+    // --- SPORTS FEEDS: FIXED & CLEANED FOR RELIABILITY ---
+    const sportsFeeds = [
+      // Only include valid, reliable, and CORS-friendly RSS sources
+      'https://www.espn.com/espn/rss/news',
+      'https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
+      'https://www.skysports.com/rss/12040',
+      'https://www.nba.com/rss/nba_rss.xml',
+      'https://www.nfl.com/rss/rsslanding?searchString=home',
+      'https://www.goal.com/feeds/en/news/africa/1',
+      // Remove known-broken or CORS-blocked feeds (cafonline.com & supersport.com often fail)
+      // 'https://www.cafonline.com/rss', // removed (CORS/RSS issues)
+      // 'https://www.supersport.com/rss', // removed (CORS/RSS issues)
+      // If you want, add more known working sports feeds here:
+      'https://www.si.com/rss/si_topstories.rss',
+      'https://www.sportsnet.ca/feed/'
+    ];
+
+    // --- IMAGE UTILS ---
+    async function extractImageFromHTML(html) {
+      // Use a DOMParser for more robust extraction (fallback to placeholder if no image found)
+      try {
+        if (!html) return 'https://via.placeholder.com/140x100?text=No+Image';
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const imgEl = doc.querySelector('img');
+        return imgEl?.src || 'https://via.placeholder.com/140x100?text=No+Image';
+      } catch {
+        return 'https://via.placeholder.com/140x100?text=No+Image';
+      }
+    }
+    async function getMicrolinkImage(url, fallbackHTML, altText) {
+      try {
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        return json.data?.image?.url || await extractImageFromHTML(fallbackHTML);
+      } catch {
+        return await extractImageFromHTML(fallbackHTML);
+      }
+    }
+
+    // --- LOADING/ERROR STATES ---
+    function showLoading(container) {
+      container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
+      container.setAttribute('aria-busy', 'true');
+    }
+    function showError(container, msg = 'Some feeds failed to load. Please check your internet connection or try again later.') {
+      // Remove all previous error messages
+      [...container.querySelectorAll('.error-msg')].forEach(e => e.remove());
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-msg';
+      errorDiv.textContent = msg;
+      container.appendChild(errorDiv);
+      container.setAttribute('aria-busy', 'false');
+    }
+
+    // --- MAIN FEED LOADER for 2-row carousels ---
+    async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt) {
+      const row1 = document.getElementById(row1Id);
+      const row2 = document.getElementById(row2Id);
+      if (!row1 || !row2) return;
+      showLoading(row1);
+      showLoading(row2);
+      row1.innerHTML = '';
+      row2.innerHTML = '';
+      let loadedAny = false;
+      let allStories = [];
+      // Load feeds one-by-one, fallback to next if current fails, but keep going (robustness)
+      for (let feed of feedList) {
+        try {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+          if (!res.ok) throw new Error('Request failed');
+          const data = await res.json();
+          if (!data.items || !Array.isArray(data.items) || data.items.length === 0) throw new Error('Invalid/empty RSS data');
+          // Only grab entries with title & link
+          const items = data.items.slice(0, sliceCount).filter(item => item && item.title && item.link);
+          for (let item of items) {
+            const img = await getMicrolinkImage(item.link, item.content || item.description, item.title);
+            allStories.push({
+              link: item.link,
+              title: item.title,
+              img
+            });
+            loadedAny = true;
+          }
+        } catch (err) {
+          console.error(`${alt} Feed error:`, feed, err);
+        }
+      }
+      // Distribute stories into 2 rows
+      const half = Math.ceil(allStories.length / 2);
+      const row1Stories = allStories.slice(0, half);
+      const row2Stories = allStories.slice(half);
+      for (let story of row1Stories) {
+        const div = document.createElement('div');
+        div.className = 'story';
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
+  <img src="${story.img}" alt="${story.title}">
+  <p></p>
+</a>`;
+        div.querySelector('p').textContent = story.title;
+        row1.appendChild(div);
+      }
+      for (let story of row2Stories) {
+        const div = document.createElement('div');
+        div.className = 'story';
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
+  <img src="${story.img}" alt="${story.title}">
+  <p></p>
+</a>`;
+        div.querySelector('p').textContent = story.title;
+        row2.appendChild(div);
+      }
+      if (!loadedAny) {
+        showError(row1, `All ${alt} feeds failed to load.`);
+        showError(row2, `All ${alt} feeds failed to load.`);
+      } else if (allStories.length < feedList.length * sliceCount) {
+        showError(row1, `Some ${alt} feeds failed to load.`);
+        showError(row2, `Some ${alt} feeds failed to load.`);
+      }
+      row1.setAttribute('aria-busy', 'false');
+      row2.setAttribute('aria-busy', 'false');
+    }
+
+    // --- LOAD & REFRESH ---
+    function reloadAll() {
+      loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story');
+      loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop');
+      loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports');
+    }
+    reloadAll();
+    setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story'), 300000);
+    setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
+    setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
+
+    // --- DISQUS ---
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
+    (function () {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+
+    // --- THEME SWITCH ---
+    function applyTheme(theme) {
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+    function toggleTheme() {
+      const current = document.body.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+    (function initializeTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const themeToApply = saved || (prefersDark ? 'dark' : 'light');
+      applyTheme(themeToApply);
+    })();
+  </script>
+</body>
+</html>
