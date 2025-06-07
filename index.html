@@ -188,8 +188,8 @@
       color: inherit;
       border: 1.5px solid #f2f2f2;
       position: relative;
-      animation: var(--fadein);
-      animation-fill-mode: forwards;
+      /* animation: var(--fadein);  <-- REMOVED TO PREVENT TWINKLING */
+      /* animation-fill-mode: forwards; <-- REMOVED */
     }
     body.dark .story { background: var(--glass-dark); border-color: #23273a; }
     .story:focus-within, .story:hover {
@@ -232,21 +232,18 @@
       padding: 10px 7px 0 7px;
       font-size: 14.7px;
       line-height: 1.32;
-      /* height: 100px; */ /* Removed fixed height */
-      /* overflow: hidden; */ /* Changed for better text visibility */
       flex-grow: 1;
       text-align: left;
       font-weight: 600;
       color: inherit;
       letter-spacing: -.3px;
       display: -webkit-box;
-      -webkit-line-clamp: 4; /* Show up to 4 lines and then ellipsis */
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
       word-break: break-word;
       background: transparent;
     }
-    /* Responsive fixes */
     @media (max-width: 1200px) {
       .layout { max-width: 100vw; }
       .main-content { max-width: 96vw; }
@@ -269,8 +266,7 @@
       .story { width: 100px; min-height: 180px; }
       .story p {
         font-size: 12px;
-        /* height: 55px; */ /* Removed fixed height */
-        -webkit-line-clamp: 5; /* Show up to 5 lines on mobile */
+        -webkit-line-clamp: 5;
       }
       .disqus-section, .trends-box { min-height: 90px; }
       .sidebar { min-width: 0; max-width: 100vw; }
@@ -540,6 +536,14 @@
       container.appendChild(errorDiv);
       container.setAttribute('aria-busy', 'false');
     }
+    // Subtle fade-in only on first insert, not on every reload
+    function fadeInElement(el, duration = 180) {
+      el.style.opacity = 0;
+      el.style.transition = `opacity ${duration}ms`;
+      requestAnimationFrame(() => {
+        el.style.opacity = 1;
+      });
+    }
     function createStoryDiv(story) {
       const div = document.createElement('div');
       div.className = 'story';
@@ -557,6 +561,7 @@
       };
       img.classList.add('loading');
       img.onload = () => { img.classList.remove('loading'); };
+      fadeInElement(div, 180); // Subtle fade on first insert only
       return div;
     }
     // ---- RESPONSIVE SLICE ----
@@ -592,14 +597,12 @@
       let allStories = [];
       let displayedLinks = new Set();
       let loadedAny = false;
-      // Helper for fade-in and display
       function displayStories(batch) {
         allStories.push(...batch.filter(story =>
           story.title && story.link && !displayedLinks.has(story.link)
         ));
         allStories = allStories.slice(0, sliceCount * 2);
         allStories.forEach(s => displayedLinks.add(s.link));
-        // Split two rows
         const half = Math.ceil(allStories.length / 2);
         const row1Stories = allStories.slice(0, half);
         const row2Stories = allStories.slice(half);
@@ -632,9 +635,7 @@
           return 0;
         }
       });
-      // Wait for at least one batch to succeed, then continue filling up with others
       await Promise.any(promises);
-      // Fallback: ensure enough stories, especially for sports
       if (allStories.length < sliceCount * 2) {
         let extraStories = [];
         for (let feed of feedList) {
@@ -654,7 +655,6 @@
         allStories.push(...extraStories.slice(0, sliceCount * 2 - allStories.length));
         displayStories([]);
       }
-      // Show error if nothing loaded
       if (!loadedAny && allStories.length === 0) {
         showError(row1, `All ${alt} feeds failed to load.`);
         showError(row2, `All ${alt} feeds failed to load.`);
@@ -669,17 +669,14 @@
       loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop');
       loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports');
     }
-    // Lazy load: only load when visible for each, for speed
     lazyLoadStories('stories-carousel', () => loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story'));
     lazyLoadStories('hiphop-carousel', () => loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop'));
     lazyLoadStories('sports-carousel', () => loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports'));
-    // Debounced resize event for reloads
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(reloadAllCarousels, 260);
     });
-    // Periodic refresh, but only if carousel is visible
     function isElementInViewport(id) {
       const el = document.getElementById(id);
       if (!el) return false;
