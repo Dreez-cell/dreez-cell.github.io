@@ -1,23 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
+  <!-- Meta & SEO -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
+  <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
   <title>Testagram - Trending News & More</title>
   <meta name="description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
-  <meta name="keywords" content="news, hip hop, sports, trending, Testagram" />
+  <meta name="keywords" content="news, hip hop, sports, RSS, trending, Testagram" />
   <meta name="author" content="Testagram Team" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Dyslexic:400,700&display=swap">
+  <!-- Open Graph & Twitter Cards -->
+  <meta property="og:title" content="Testagram - Trending News & More" />
+  <meta property="og:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreez-cell.github.io/" />
+  <meta property="og:image" content="https://dreez-cell.github.io/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Testagram - Trending News & More" />
+  <meta name="twitter:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta name="twitter:image" content="https://dreez-cell.github.io/preview.png" />
+
+  <!-- Canonical for SEO -->
+  <link rel="canonical" href="https://dreez-cell.github.io/" />
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="https://dreez-cell.github.io/apple-touch-icon.png">
+  <!-- Favicon -->
+  <link rel="icon" href="https://dreez-cell.github.io/favicon.ico" type="image/x-icon" />
+  <!-- Preconnect & DNS Prefetch -->
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://www.gstatic.com">
+  <link rel="dns-prefetch" href="https://api.rss2json.com">
+  <link rel="dns-prefetch" href="https://api.microlink.io">
+  <!-- CSP for security -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src * data:;
+    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://celebrity-gossip-3.disqus.com https://pl22779142.profitableratecpm.com https://www.highperformanceformat.com;
+    style-src 'self' 'unsafe-inline';
+    frame-src *;
+    connect-src *;
+  ">
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
+  <!-- Accessibility & Responsive CSS -->
   <style>
     :root {
       --primary: #3a8ee6;
       --primary-hover: #2a6cc0;
       --border-light: #ccc;
+      --border-dark: #333;
       --bg-light: #fff;
       --bg-dark: #121212;
       --container-max: 1200px;
-      --success: #25c685;
-      --danger: #e74c3c;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -35,8 +72,8 @@
       padding-bottom: 30px;
       transition: background 0.3s, color 0.3s;
     }
+    body.light { background: var(--bg-light); color: #000; }
     body.dark { background: var(--bg-dark); color: #eee; }
-    body.dyslexia { font-family: 'OpenDyslexic', Arial, sans-serif !important; letter-spacing: 1.1px; line-height: 1.8 !important;}
     header {
       height: 56px;
       width: 100%;
@@ -56,7 +93,7 @@
       z-index: 100;
     }
     body.dark header {
-      border-color: #333;
+      border-color: var(--border-dark);
       box-shadow: 0 2px 8px rgb(255 255 255 / 0.1);
     }
     .theme-toggle {
@@ -68,38 +105,24 @@
       transition: transform 0.2s ease;
       outline: none;
     }
+    .theme-toggle:focus-visible { outline: 2px solid var(--primary); }
     .theme-toggle:hover { transform: rotate(20deg); }
-    .search-bar {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin: 15px 0 5px 0;
-    }
-    .search-bar input[type="search"] {
-      padding: 8px 12px;
-      border: 1px solid var(--border-light);
-      border-radius: 4px 0 0 4px;
-      font-size: 1rem;
-      width: 320px;
-      max-width: 80vw;
-      outline: none;
-      transition: border-color 0.2s;
-      background: inherit;
-      color: inherit;
-    }
-    .search-bar button {
-      padding: 8px 14px;
-      background: var(--primary);
-      color: #fff;
-      border: 1px solid var(--primary);
-      border-radius: 0 4px 4px 0;
-      font-size: 1rem;
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: #fff;
+      color: #222;
+      padding: 8px 16px;
+      z-index: 9999;
+      border-radius: 0 0 5px 5px;
       font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
     }
-    .search-bar button:hover { background: var(--primary-hover); }
-    .search-bar input[type="search"]:focus { border-color: var(--primary); }
+    .skip-link:focus {
+      left: 10px;
+      top: 10px;
+      outline: 2px solid var(--primary);
+    }
     main {
       max-width: var(--container-max);
       width: 100%;
@@ -114,6 +137,7 @@
       font-weight: 700;
       letter-spacing: -.5px;
     }
+    /* --- Carousel 2-row layout --- */
     .carousel-2row {
       display: flex;
       flex-direction: column;
@@ -128,13 +152,20 @@
       scroll-behavior: smooth;
       min-height: 0;
     }
+    /* Remove bottom border for rows except last in carousel */
     .carousel-2row .story-container-row:last-child {
       border-bottom: 1px solid var(--border-light);
+    }
+    body.dark .carousel-2row .story-container-row:last-child {
+      border-color: #444;
+    }
+    body.light .carousel-2row .story-container-row:last-child {
+      border-color: #ddd;
     }
     .story {
       flex: 0 0 auto;
       width: 140px;
-      height: 240px;
+      height: 220px;
       background: #eee;
       border-radius: 8px;
       text-align: center;
@@ -144,9 +175,11 @@
       display: flex;
       flex-direction: column;
       color: inherit;
-      position: relative;
     }
-    body.dark .story { background: #2a2a2a; }
+    body.dark .story {
+      background: #2a2a2a;
+      box-shadow: 0 0 8px rgba(255,255,255,0.07);
+    }
     .story:hover {
       transform: scale(1.07);
       box-shadow: 0 0 14px rgba(0,0,0,0.2);
@@ -168,6 +201,10 @@
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.05));
       transition: filter 0.3s;
     }
+    body.dark .story img {
+      border-color: #555;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,0.1));
+    }
     .story p {
       padding: 8px 6px;
       font-size: 14px;
@@ -178,66 +215,38 @@
       text-align: left;
       font-weight: 600;
     }
-    .summarize-btn {
-      position:absolute; bottom:8px; left:8px;
-      background: var(--primary);
-      color:#fff; border:none; border-radius:5px; font-size:13px; padding: 3px 11px; cursor:pointer;
-      z-index:1; opacity: 0.85;
+    .ad-box, .thread-box {
+      margin: 15px auto;
+      padding: 14px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 320px;
+      background: #fafafa;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
     }
-    .summarize-btn:hover { opacity:1; background: var(--primary-hover);}
-    .sentiment-badge {
-      position:absolute; top:7px; left:7px;
-      font-size:18px; padding:1px 5px; border-radius:5px; color:#fff; font-weight:700; z-index:2;
-      background:#999;
+    body.dark .ad-box, body.dark .thread-box {
+      background: #1a1a1a;
+      box-shadow: 0 0 12px rgba(255,255,255,0.07);
+      color: #ddd;
     }
-    .sentiment-positive { background:#25c685;}
-    .sentiment-neutral { background:#888;}
-    .sentiment-negative { background:#e74c3c;}
-    /* Trending cloud */
-    #trending-cloud {
-      position: fixed;
-      top: 70px; left: 50%; transform: translateX(-50%);
-      background: rgba(255,255,255,0.91);
-      color: #333;
-      border-radius: 20px;
-      padding: 7px 20px 6px 20px;
-      font-size: 1.1rem;
-      z-index: 9999;
-      box-shadow: 0 2px 22px rgba(0,0,0,0.08);
-      display: flex; flex-wrap: wrap; gap: 10px;
-      max-width: 90vw;
+    iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      background: inherit;
+      border-radius: 6px;
     }
-    #trending-cloud .trend-word { font-weight: bold; cursor: pointer; }
-    #trending-cloud .trend-word:hover { color: var(--primary); text-decoration: underline; }
-    /* Dyslexia mode */
-    .dyslexia-toggle { position:fixed;bottom:20px;right:20px;z-index:99999;padding:8px 17px;font-size:18px;background:var(--primary);color:#fff;border:none;border-radius:7px;cursor:pointer;}
-    .dyslexia-toggle.active { background: #25c685;}
-    /* News Ticker */
-    #news-ticker-bar {
-      width: 100vw;
-      overflow: hidden;
-      background: var(--primary);
-      color: #fff;
-      font-size: 1rem;
-      white-space: nowrap;
-      position: fixed;
-      top: 0; left: 0; z-index: 10001;
-      height: 28px; display:flex; align-items:center;
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
     }
-    #news-ticker-bar span { display:inline-block; padding-left: 100vw; animation: ticker-scroll 50s linear infinite;}
-    @keyframes ticker-scroll {
-      0% { transform: translateX(0);}
-      100% { transform: translateX(-100vw);}
+    a:hover, a:focus {
+      color: var(--primary-hover);
+      text-decoration: underline;
+      outline: none;
     }
-    #summary-modal-bg {
-      position:fixed;z-index:100010;top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
-    #summary-modal-bg.active {display:flex;}
-    #summary-modal {
-      background:#fff;color:#222;max-width:500px;border-radius:11px;padding:24px 18px;box-shadow:0 8px 34px rgba(0,0,0,0.13);position:relative;
-    }
-    #summary-modal .close-modal {position:absolute;right:11px;top:7px;background:none;border:none;font-size:23px;cursor:pointer;}
-    #summary-modal h4 {margin-bottom:10px;}
     .spinner {
       width: 32px;
       height: 32px;
@@ -247,40 +256,33 @@
       animation: spin 1s linear infinite;
       margin: 40px auto;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error-msg {
+      color: #b00020;
+      font-weight: 600;
+      text-align: center;
+      margin: 20px 0;
+    }
     @media (max-width: 600px) {
       .story { width: 120px; height: 190px; }
       .story p { font-size: 13px; height: 80px; }
-      #trending-cloud { font-size: .97rem; top:48px; }
+      iframe { height: 320px; }
+      header { font-size: 18px; height: 48px; }
+      .carousel-2row .story-container-row { gap: 10px; }
     }
   </style>
 </head>
 <body>
-  <!-- News Ticker -->
-  <div id="news-ticker-bar" style="display:none;"><span id="news-ticker-content"></span></div>
-  <!-- Trending Cloud -->
-  <div id="trending-cloud" style="display:none;"></div>
-  <!-- Dyslexia Mode Toggle -->
-  <button class="dyslexia-toggle" id="dyslexia-btn" aria-label="Dyslexia-friendly mode" title="Toggle dyslexia-friendly mode">Dyslexia Mode</button>
-  <!-- Summarize Modal -->
-  <div id="summary-modal-bg" tabindex="-1" aria-modal="true">
-    <div id="summary-modal">
-      <button class="close-modal" aria-label="Close summary" onclick="closeSummaryModal()">×</button>
-      <h4 id="summary-title"></h4>
-      <div id="summary-content" style="margin-top:9px;"></div>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <noscript>
+    <div style="color: red; text-align: center;">
+      JavaScript is required for the full experience. Please enable it in your browser.
     </div>
-  </div>
-
+  </noscript>
   <header>
     <span>Testagram</span>
     <button class="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle dark/light theme" onclick="toggleTheme()">🌙</button>
   </header>
-  <div class="search-bar" role="search">
-    <form id="searchForm" autocomplete="off" onsubmit="event.preventDefault();searchStories();">
-      <input type="search" id="searchInput" placeholder="Search news, hip hop, sports..." aria-label="Search for news">
-      <button type="submit" aria-label="Search">🔍</button>
-    </form>
-  </div>
-
   <main id="main" role="main">
     <!-- General News Stories -->
     <section aria-labelledby="general-news-title">
@@ -290,6 +292,23 @@
         <div id="stories-row2" class="story-container-row" role="list"></div>
       </div>
     </section>
+    <!-- HighPerformanceFormat Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
+      <script type="text/javascript">
+        var atOptions = {
+          'key' : '18d0d482298d34bd3713b4a42c4121c6',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+    </div>
+    <!-- Profitablerate CPM Ad -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement - Profitablerate CPM">
+      <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
+    </div>
     <!-- Hip Hop Stories -->
     <section aria-labelledby="hiphop-news-title">
       <h2 id="hiphop-news-title">Hip Hop Stories</h2>
@@ -306,339 +325,248 @@
         <div id="sports-row2" class="story-container-row" role="list"></div>
       </div>
     </section>
+    <!-- Embedded Trends iframe -->
+    <section aria-label="Trending topics iframe" style="max-width: 1200px;">
+      <div class="thread-box" role="region" aria-live="polite" aria-label="Embedded trending topics">
+        <iframe src="https://dreez-cell.github.io/Trends/" title="Trending Topics" loading="lazy"></iframe>
+      </div>
+    </section>
+    <!-- Disqus Comments Section -->
+    <section aria-label="Comments" style="max-width: 1200px;">
+      <div class="thread-box" role="region">
+        <div id="disqus_thread"></div>
+      </div>
+    </section>
   </main>
 
-<script>
-const feeds = [
-  'https://www.capitalfm.co.ke/news/feed/',
-  'https://www.standardmedia.co.ke/rss/headlines.php',
-  'https://www.kenyanwallstreet.com/feed/',
-  'https://www.tuko.co.ke/rss/',
-  'https://www.ghafla.com/ke/feed/',
-  'https://www.nation.africa/kenya/rss',
-  'https://www.pd.co.ke/feed/',
-  'https://www.kenyan-post.com/feeds/posts/default',
-  'https://www.theeastafrican.co.ke/rss.xml',
-  'https://www.tuko.co.ke/rss/all.rss',
-  'https://www.kenyans.co.ke/feeds/news',
-  'https://citizen.digital/news/rss',
-  'https://www.businessdailyafrica.com/rss',
-  'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
-  'https://tech-ish.com/feed/',
-  'https://www.nation.africa/kenya/business/rss',
-  'https://nairobinews.nation.africa/rss',
-  'https://www.kbc.co.ke/feed/'
-];
-const hiphopFeeds = [
-  'https://allhiphop.com/feed/',
-  'https://www.xxlmag.com/feed/',
-  'https://hiphopwired.com/feed/',
-  'https://hiphop-n-more.com/feed/',
-  'https://undergroundhiphopblog.com/feed/',
-  'https://thesource.com/feed/',
-  'https://ambrosiaforheads.com/feed/',
-  'https://rapindustry.com/feed/',
-  'https://dilemaradio.com/feed/',
-  'https://spiceonthebeat.com/feed/',
-  'https://uproxx.com/music/feed/',
-  'https://www.okayplayer.com/feed',
-  'https://hiphopvibe.com/feed/',
-  'https://djbooth.net/rss/all',
-  'https://rapzilla.com/feed/',
-  'https://hiphopgoldenage.com/feed/',
-  'https://rapradar.com/feed/',
-  'https://respectmyregion.com/feed/',
-  'https://siccness.net/rss.xml'
-];
-const sportsFeeds = [
-  'https://www.espn.com/espn/rss/news',
-  'https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
-  'https://www.skysports.com/rss/12040',
-  'https://www.nba.com/rss/nba_rss.xml',
-  'https://www.nfl.com/rss/rsslanding?searchString=home',
-  'https://www.goal.com/feeds/en/news/africa/1',
-  'https://www.si.com/rss/si_topstories.rss',
-  'https://www.sportsnet.ca/feed/'
-];
-
-async function extractImageFromHTML(html) {
-  try {
-    if (!html) return 'https://via.placeholder.com/140x100?text=No+Image';
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const imgEl = doc.querySelector('img');
-    return imgEl?.src || 'https://via.placeholder.com/140x100?text=No+Image';
-  } catch {
-    return 'https://via.placeholder.com/140x100?text=No+Image';
-  }
-}
-async function getMicrolinkImage(url, fallbackHTML, altText) {
-  try {
-    const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
-    const json = await res.json();
-    return json.data?.image?.url || await extractImageFromHTML(fallbackHTML);
-  } catch {
-    return await extractImageFromHTML(fallbackHTML);
-  }
-}
-
-function showLoading(container) {
-  container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
-  container.setAttribute('aria-busy', 'true');
-}
-function showError(container, msg = 'Some feeds failed to load.') {
-  [...container.querySelectorAll('.error-msg')].forEach(e => e.remove());
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error-msg';
-  errorDiv.textContent = msg;
-  container.appendChild(errorDiv);
-  container.setAttribute('aria-busy', 'false');
-}
-
-// AI Summarizer (uses SMMRY public API as demo/free, replace for production)
-async function fetchSummary(text) {
-  try {
-    const resp = await fetch("https://api.smmry.com?SM_API_KEY=F70F6E9C18&SM_WITH_BREAK&SM_LENGTH=7&SM_KEYWORD_COUNT=3", {
-      method: "POST",
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
-      body: "sm_api_input=" + encodeURIComponent(text)
-    });
-    const data = await resp.json();
-    return data.sm_api_content || data.sm_api_message || "No summary available.";
-  } catch {
-    return "Summary unavailable (API quota exceeded).";
-  }
-}
-function showSummaryModal(title, content) {
-  document.getElementById('summary-title').textContent = title;
-  document.getElementById('summary-content').textContent = content;
-  document.getElementById('summary-modal-bg').classList.add('active');
-}
-function closeSummaryModal() {
-  document.getElementById('summary-modal-bg').classList.remove('active');
-}
-document.getElementById('summary-modal-bg').onclick = function(e){
-  if (e.target === this) closeSummaryModal();
-};
-document.addEventListener('keydown', e => {if (e.key === 'Escape') closeSummaryModal();});
-
-function extractTrendingWords(allStories) {
-  const stopwords = new Set(['the','a','an','in','on','for','and','to','of','at','by','as','it','is','with','from','that','this','are','be','has','have','was','but','not','or','you','he','she','his','her','they','their','them','its','will','who','about','over','after','up','out']);
-  let wordCounts = {};
-  allStories.forEach(story=>{
-    const txt = (story.title + " " + (story.description||"")).toLowerCase();
-    txt.replace(/[#'\-:()/.,!?"\[\]]/g, ' ').split(/\s+/).forEach(word=>{
-      if(word.length>3 && !stopwords.has(word)) wordCounts[word]=1+(wordCounts[word]||0);
-    });
-  });
-  return Object.entries(wordCounts).sort((a,b)=>b[1]-a[1]).slice(0,15).map(([w,c])=>w);
-}
-function updateTrendingCloud(words) {
-  const cloud = document.getElementById('trending-cloud');
-  if (!words.length) { cloud.style.display='none'; return;}
-  cloud.innerHTML = words.map(w=>`<span class="trend-word">${w}</span>`).join('');
-  cloud.style.display = '';
-}
-
-function analyzeSentiment(text) {
-  const pos = ['win','growth','success','happy','profit','record','rise','increase','love','good','positive','strong'];
-  const neg = ['fail','loss','attack','death','decline','fall','negative','weak','crisis','bad','down','hurt','injury'];
-  let score = 0;
-  text = (text||"").toLowerCase();
-  pos.forEach(w=>{if(text.includes(w))score++;});
-  neg.forEach(w=>{if(text.includes(w))score--;});
-  if(score>1) return {label:"Positive",class:"sentiment-positive",icon:"😊"};
-  if(score<-1) return {label:"Negative",class:"sentiment-negative",icon:"😢"};
-  return {label:"Neutral",class:"sentiment-neutral",icon:"😐"};
-}
-
-document.getElementById('dyslexia-btn').onclick = function(){
-  document.body.classList.toggle('dyslexia');
-  this.classList.toggle('active');
-  localStorage.setItem('dyslexia', document.body.classList.contains('dyslexia') ? "1" : "");
-};
-if(localStorage.getItem('dyslexia')==="1") {
-  document.body.classList.add('dyslexia');
-  document.getElementById('dyslexia-btn').classList.add('active');
-}
-
-function updateNewsTicker(headlines) {
-  const bar = document.getElementById('news-ticker-bar');
-  const content = document.getElementById('news-ticker-content');
-  if (!headlines.length) { bar.style.display='none'; return;}
-  content.innerHTML = headlines.map(h=>`<span style="margin-right:40px;">${h}</span>`).join('');
-  bar.style.display = '';
-}
-
-window._allStoriesCache = [];
-
-async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt, searchTerm = '') {
-  const row1 = document.getElementById(row1Id);
-  const row2 = document.getElementById(row2Id);
-  if (!row1 || !row2) return;
-  showLoading(row1);
-  showLoading(row2);
-  row1.innerHTML = '';
-  row2.innerHTML = '';
-  let loadedAny = false;
-  let allStories = [];
-  for (let feed of feedList) {
+  <!-- Firebase Analytics -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+      authDomain: "teatagram-a3a8f.firebaseapp.com",
+      projectId: "teatagram-a3a8f",
+      storageBucket: "teatagram-a3a8f.appspot.com",
+      messagingSenderId: "835709485105",
+      appId: "1:835709485105:web:f70765b17d028e6e219510",
+      measurementId: "G-XF2WKT1TTE"
+    };
     try {
-      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-      if (!res.ok) throw new Error('Request failed');
-      const data = await res.json();
-      if (!data.items || !Array.isArray(data.items) || data.items.length === 0) throw new Error('Invalid/empty RSS data');
-      let items = data.items.slice(0, sliceCount).filter(item => item && item.title && item.link);
-      if (searchTerm) {
-        const term = searchTerm.toLowerCase();
-        items = items.filter(item =>
-          (item.title && item.title.toLowerCase().includes(term)) ||
-          (item.description && item.description.toLowerCase().includes(term)) ||
-          (item.content && item.content.toLowerCase().includes(term))
-        );
-      }
-      for (let item of items) {
-        const img = await getMicrolinkImage(item.link, item.content || item.description, item.title);
-        allStories.push({
-          link: item.link,
-          title: item.title,
-          description: item.description || item.content || "",
-          img
-        });
-        loadedAny = true;
-      }
-    } catch (err) {
-      console.error(`${alt} Feed error:`, feed, err);
+      const app = initializeApp(firebaseConfig);
+      getAnalytics(app);
+    } catch(e) {
+      console.warn('Firebase Analytics could not be initialized:', e);
     }
-  }
-  // Save to cache for trending/ticker
-  if (!window._allStoriesCache) window._allStoriesCache = [];
-  if (alt === 'story') window._allStoriesCache = allStories.concat(window._allStoriesCache);
-  else window._allStoriesCache = window._allStoriesCache.concat(allStories);
-  const half = Math.ceil(allStories.length / 2);
-  const row1Stories = allStories.slice(0, half);
-  const row2Stories = allStories.slice(half);
-  for (let story of row1Stories) {
-    const div = document.createElement('div');
-    div.className = 'story';
-    div.innerHTML = `
-<a href="${story.link}" target="_blank" rel="noopener noreferrer">
+  </script>
+
+  <script>
+    // --- FEEDS ---
+    const feeds = [
+      'https://www.capitalfm.co.ke/news/feed/',
+      'https://www.standardmedia.co.ke/rss/headlines.php',
+      'https://www.kenyanwallstreet.com/feed/',
+      'https://www.tuko.co.ke/rss/',
+      'https://www.ghafla.com/ke/feed/',
+      'https://www.nation.africa/kenya/rss',
+      'https://www.pd.co.ke/feed/',
+      'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml',
+      'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news',
+      'https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss',
+      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/',
+      'https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss',
+      'https://www.kbc.co.ke/feed/'
+    ];
+    const hiphopFeeds = [
+      'https://allhiphop.com/feed/',
+      'https://www.xxlmag.com/feed/',
+      'https://hiphopwired.com/feed/',
+      'https://hiphop-n-more.com/feed/',
+      'https://undergroundhiphopblog.com/feed/',
+      'https://thesource.com/feed/',
+      'https://ambrosiaforheads.com/feed/',
+      'https://rapindustry.com/feed/',
+      'https://dilemaradio.com/feed/',
+      'https://spiceonthebeat.com/feed/',
+      'https://uproxx.com/music/feed/',
+      'https://www.okayplayer.com/feed',
+      'https://hiphopvibe.com/feed/',
+      'https://djbooth.net/rss/all',
+      'https://rapzilla.com/feed/',
+      'https://hiphopgoldenage.com/feed/',
+      'https://rapradar.com/feed/',
+      'https://respectmyregion.com/feed/',
+      'https://siccness.net/rss.xml'
+    ];
+    // --- SPORTS FEEDS: FIXED & CLEANED FOR RELIABILITY ---
+    const sportsFeeds = [
+      // Only include valid, reliable, and CORS-friendly RSS sources
+      'https://www.espn.com/espn/rss/news',
+      'https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
+      'https://www.skysports.com/rss/12040',
+      'https://www.nba.com/rss/nba_rss.xml',
+      'https://www.nfl.com/rss/rsslanding?searchString=home',
+      'https://www.goal.com/feeds/en/news/africa/1',
+      // Remove known-broken or CORS-blocked feeds (cafonline.com & supersport.com often fail)
+      // 'https://www.cafonline.com/rss', // removed (CORS/RSS issues)
+      // 'https://www.supersport.com/rss', // removed (CORS/RSS issues)
+      // If you want, add more known working sports feeds here:
+      'https://www.si.com/rss/si_topstories.rss',
+      'https://www.sportsnet.ca/feed/'
+    ];
+
+    // --- IMAGE UTILS ---
+    async function extractImageFromHTML(html) {
+      // Use a DOMParser for more robust extraction (fallback to placeholder if no image found)
+      try {
+        if (!html) return 'https://via.placeholder.com/140x100?text=No+Image';
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const imgEl = doc.querySelector('img');
+        return imgEl?.src || 'https://via.placeholder.com/140x100?text=No+Image';
+      } catch {
+        return 'https://via.placeholder.com/140x100?text=No+Image';
+      }
+    }
+    async function getMicrolinkImage(url, fallbackHTML, altText) {
+      try {
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        return json.data?.image?.url || await extractImageFromHTML(fallbackHTML);
+      } catch {
+        return await extractImageFromHTML(fallbackHTML);
+      }
+    }
+
+    // --- LOADING/ERROR STATES ---
+    function showLoading(container) {
+      container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
+      container.setAttribute('aria-busy', 'true');
+    }
+    function showError(container, msg = 'Some feeds failed to load. Please check your internet connection or try again later.') {
+      // Remove all previous error messages
+      [...container.querySelectorAll('.error-msg')].forEach(e => e.remove());
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-msg';
+      errorDiv.textContent = msg;
+      container.appendChild(errorDiv);
+      container.setAttribute('aria-busy', 'false');
+    }
+
+    // --- MAIN FEED LOADER for 2-row carousels ---
+    async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt) {
+      const row1 = document.getElementById(row1Id);
+      const row2 = document.getElementById(row2Id);
+      if (!row1 || !row2) return;
+      showLoading(row1);
+      showLoading(row2);
+      row1.innerHTML = '';
+      row2.innerHTML = '';
+      let loadedAny = false;
+      let allStories = [];
+      // Load feeds one-by-one, fallback to next if current fails, but keep going (robustness)
+      for (let feed of feedList) {
+        try {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+          if (!res.ok) throw new Error('Request failed');
+          const data = await res.json();
+          if (!data.items || !Array.isArray(data.items) || data.items.length === 0) throw new Error('Invalid/empty RSS data');
+          // Only grab entries with title & link
+          const items = data.items.slice(0, sliceCount).filter(item => item && item.title && item.link);
+          for (let item of items) {
+            const img = await getMicrolinkImage(item.link, item.content || item.description, item.title);
+            allStories.push({
+              link: item.link,
+              title: item.title,
+              img
+            });
+            loadedAny = true;
+          }
+        } catch (err) {
+          console.error(`${alt} Feed error:`, feed, err);
+        }
+      }
+      // Distribute stories into 2 rows
+      const half = Math.ceil(allStories.length / 2);
+      const row1Stories = allStories.slice(0, half);
+      const row2Stories = allStories.slice(half);
+      for (let story of row1Stories) {
+        const div = document.createElement('div');
+        div.className = 'story';
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
   <img src="${story.img}" alt="${story.title}">
   <p></p>
 </a>`;
-    div.querySelector('p').textContent = story.title;
-    // Sentiment
-    let sent = analyzeSentiment(story.title+" "+(story.description||""));
-    let badge = document.createElement('span');
-    badge.className = `sentiment-badge ${sent.class}`;
-    badge.textContent = sent.icon;
-    div.appendChild(badge);
-    // Summarize button
-    let btn = document.createElement('button');
-    btn.className = "summarize-btn";
-    btn.textContent = "Summarize";
-    btn.onclick = async (e)=>{
-      e.preventDefault();
-      btn.textContent = "Summarizing...";
-      btn.disabled = true;
-      let summary = await fetchSummary(`${story.title}. ${story.description}`);
-      showSummaryModal(story.title, summary);
-      btn.textContent = "Summarize";
-      btn.disabled = false;
-    };
-    div.appendChild(btn);
-    row1.appendChild(div);
-  }
-  for (let story of row2Stories) {
-    const div = document.createElement('div');
-    div.className = 'story';
-    div.innerHTML = `
-<a href="${story.link}" target="_blank" rel="noopener noreferrer">
+        div.querySelector('p').textContent = story.title;
+        row1.appendChild(div);
+      }
+      for (let story of row2Stories) {
+        const div = document.createElement('div');
+        div.className = 'story';
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
   <img src="${story.img}" alt="${story.title}">
   <p></p>
 </a>`;
-    div.querySelector('p').textContent = story.title;
-    // Sentiment
-    let sent = analyzeSentiment(story.title+" "+(story.description||""));
-    let badge = document.createElement('span');
-    badge.className = `sentiment-badge ${sent.class}`;
-    badge.textContent = sent.icon;
-    div.appendChild(badge);
-    // Summarize button
-    let btn = document.createElement('button');
-    btn.className = "summarize-btn";
-    btn.textContent = "Summarize";
-    btn.onclick = async (e)=>{
-      e.preventDefault();
-      btn.textContent = "Summarizing...";
-      btn.disabled = true;
-      let summary = await fetchSummary(`${story.title}. ${story.description}`);
-      showSummaryModal(story.title, summary);
-      btn.textContent = "Summarize";
-      btn.disabled = false;
-    };
-    div.appendChild(btn);
-    row2.appendChild(div);
-  }
-  if (!loadedAny) {
-    showError(row1, `All ${alt} feeds failed to load.`);
-    showError(row2, `All ${alt} feeds failed to load.`);
-  }
-  row1.setAttribute('aria-busy', 'false');
-  row2.setAttribute('aria-busy', 'false');
-  setTimeout(()=>enhanceStoriesUI(window._allStoriesCache), 100);
-}
+        div.querySelector('p').textContent = story.title;
+        row2.appendChild(div);
+      }
+      if (!loadedAny) {
+        showError(row1, `All ${alt} feeds failed to load.`);
+        showError(row2, `All ${alt} feeds failed to load.`);
+      } else if (allStories.length < feedList.length * sliceCount) {
+        showError(row1, `Some ${alt} feeds failed to load.`);
+        showError(row2, `Some ${alt} feeds failed to load.`);
+      }
+      row1.setAttribute('aria-busy', 'false');
+      row2.setAttribute('aria-busy', 'false');
+    }
 
-// Trending and Ticker UI
-function enhanceStoriesUI(allStories) {
-  updateTrendingCloud(extractTrendingWords(allStories));
-  updateNewsTicker(allStories.slice(0,10).map(s=>s.title));
-}
-
-function searchStories() {
-  const q = document.getElementById('searchInput').value.trim();
-  if (!q) {
+    // --- LOAD & REFRESH ---
+    function reloadAll() {
+      loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story');
+      loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop');
+      loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports');
+    }
     reloadAll();
-    return;
-  }
-  window._allStoriesCache = [];
-  loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story', q);
-  loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop', q);
-  loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports', q);
-}
-document.getElementById('searchInput').addEventListener('input', function(e) {
-  if (this.value.trim().length === 0) reloadAll();
-});
+    setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story'), 300000);
+    setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
+    setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
 
-// Theme switching
-function applyTheme(theme) {
-  document.body.classList.remove('light', 'dark');
-  document.body.classList.add(theme);
-  const btn = document.querySelector('.theme-toggle');
-  btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-}
-function toggleTheme() {
-  const current = document.body.classList.contains('dark') ? 'dark' : 'light';
-  const newTheme = current === 'dark' ? 'light' : 'dark';
-  applyTheme(newTheme);
-  localStorage.setItem('theme', newTheme);
-}
-(function initializeTheme() {
-  const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const themeToApply = saved || (prefersDark ? 'dark' : 'light');
-  applyTheme(themeToApply);
-})();
+    // --- DISQUS ---
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
+    (function () {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
 
-function reloadAll() {
-  window._allStoriesCache = [];
-  loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story');
-  loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop');
-  loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports');
-}
-reloadAll();
-setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story'), 300000);
-setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
-setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
-</script>
+    // --- THEME SWITCH ---
+    function applyTheme(theme) {
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+    function toggleTheme() {
+      const current = document.body.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+    (function initializeTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const themeToApply = saved || (prefersDark ? 'dark' : 'light');
+      applyTheme(themeToApply);
+    })();
+  </script>
 </body>
 </html>
