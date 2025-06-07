@@ -24,58 +24,63 @@
     :root {
       --primary: #3a8ee6;
       --primary-hover: #2a6cc0;
-      --border-light: #ccc;
-      --border-dark: #333;
-      --bg-light: #fff;
-      --bg-dark: #121212;
-      --container-max: 1200px;
-      --side-width: 320px;
+      --border-light: #e3e8ef;
+      --border-dark: #242a32;
+      --bg-light: #fafdff;
+      --bg-dark: #10131a;
+      --container-max: 1100px;
+      --side-width: 300px;
       --main-width: 750px;
-      --gap: 30px;
-      --radius: 12px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.09);
-      --shadow-dark: 0 2px 20px rgba(255,255,255,0.08);
+      --gap: 32px;
+      --radius: 14px;
+      --shadow: 0 2px 18px 0 rgba(0,0,0,0.09);
+      --shadow-dark: 0 2px 20px 0 rgba(255,255,255,0.09);
+      --glass: rgba(255,255,255,0.60);
+      --glass-dark: rgba(24,28,38,0.7);
+      --fadein: fadein 0.7s cubic-bezier(.4,2,.3,1);
     }
+    @keyframes fadein { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1);} }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-light);
-      color: #000;
-      line-height: 1.5;
+      color: #1a2233;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 30px;
       transition: background 0.3s, color 0.3s;
+      padding-bottom: 30px;
     }
-    body.light { background: var(--bg-light); color: #000; }
-    body.dark { background: var(--bg-dark); color: #eee; }
+    body.light { background: var(--bg-light); color: #1a2233; }
+    body.dark { background: var(--bg-dark); color: #f5f7fa; }
     header {
-      height: 64px;
+      height: 58px;
       width: 100%;
       max-width: var(--container-max);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 24px;
+      padding: 0 20px;
       font-size: 2rem;
       font-weight: 800;
       letter-spacing: -1px;
       border-bottom: 1px solid var(--border-light);
-      background: inherit;
+      background: var(--glass);
       color: inherit;
-      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
       position: sticky;
       top: 0;
       z-index: 100;
       border-radius: 0 0 var(--radius) var(--radius);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      transition: background 0.2s;
+      user-select:none;
     }
     body.dark header {
       border-color: var(--border-dark);
+      background: var(--glass-dark);
       box-shadow: var(--shadow-dark);
     }
     .theme-toggle {
@@ -84,11 +89,13 @@
       border: none;
       cursor: pointer;
       color: inherit;
-      transition: transform 0.2s ease;
+      transition: transform 0.18s cubic-bezier(.4,2,.3,1);
       outline: none;
+      border-radius: 50%;
+      padding: 5px;
     }
     .theme-toggle:focus-visible { outline: 2px solid var(--primary); }
-    .theme-toggle:hover { transform: rotate(20deg) scale(1.15); }
+    .theme-toggle:active, .theme-toggle:hover { transform: scale(1.21) rotate(-10deg);}
     .skip-link {
       position: absolute;
       left: -9999px;
@@ -114,7 +121,7 @@
       width: 100%;
       max-width: var(--container-max);
       margin: 0 auto;
-      padding: var(--gap) 10px 0 10px;
+      padding: var(--gap) 8px 0 8px;
       min-height: 80vh;
       align-items: flex-start;
     }
@@ -129,37 +136,33 @@
     .sidebar {
       flex: 0 0 var(--side-width);
       max-width: var(--side-width);
-      min-width: 260px;
+      min-width: 210px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 18px;
       position: sticky;
-      top: 85px;
+      top: 75px;
       align-self: flex-start;
     }
     section > h2 {
-      margin-bottom: 8px;
-      font-size: 1.45rem;
+      margin-bottom: 7px;
+      font-size: 1.34rem;
       font-weight: 800;
       letter-spacing: -.5px;
       color: var(--primary-hover);
       text-shadow: 0 2px 8px rgba(58,142,230,0.09);
     }
-    .carousel-2row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .carousel-2row { display: flex; flex-direction: column; gap: 10px; }
     .carousel-2row .story-container-row {
       display: flex;
       overflow-x: auto;
-      gap: 18px;
-      padding: 10px 5px 0 5px;
+      gap: 16px;
+      padding: 10px 3px 0 3px;
       border-bottom: none;
       scroll-behavior: smooth;
       min-height: 0;
       scrollbar-width: thin;
-      scrollbar-color: var(--primary) #eaeaea;
+      scrollbar-color: var(--primary) #f0f6fa;
     }
     .carousel-2row .story-container-row:last-child {
       border-bottom: 1px solid var(--border-light);
@@ -174,27 +177,31 @@
       flex: 0 0 auto;
       width: 140px;
       height: 220px;
-      background: #f8f9fa;
+      background: var(--glass);
       border-radius: var(--radius);
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.11);
-      transition: transform 0.22s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+      box-shadow: 0 2px 7px rgba(0,0,0,0.10);
+      transition: box-shadow .23s, border .21s, background .15s, transform .18s cubic-bezier(.4,2,.3,1);
       display: flex;
       flex-direction: column;
       color: inherit;
-      border: 1.5px solid transparent;
+      border: 1.5px solid #f2f2f2;
       position: relative;
+      opacity: 0;
+      animation: var(--fadein);
+      animation-fill-mode: forwards;
     }
-    body.dark .story {
-      background: #2a2a2a;
-      box-shadow: 0 2px 8px rgba(255,255,255,0.07);
-    }
-    .story:hover, .story:focus-within {
-      transform: scale(1.08) translateY(-7px);
-      box-shadow: 0 10px 26px 0 rgba(58,142,230,0.19), 0 2px 6px rgba(0,0,0,0.13);
+    body.dark .story { background: var(--glass-dark); border-color: #23273a; }
+    .story:focus-within, .story:hover {
+      transform: scale(1.07) translateY(-5px) rotate(-1.5deg);
       border: 1.5px solid var(--primary);
       z-index: 2;
+      box-shadow: 0 10px 26px 0 rgba(58,142,230,0.18), 0 2px 6px rgba(0,0,0,0.13);
+      background: var(--bg-light);
+    }
+    body.dark .story:focus-within, body.dark .story:hover {
+      background: var(--glass-dark);
     }
     .story a {
       color: inherit;
@@ -208,32 +215,24 @@
       width: 100%;
       height: 100px;
       object-fit: cover;
-      border-bottom: 1.5px solid #ccc;
+      border-bottom: 1.5px solid #ccd;
       flex-shrink: 0;
       border-radius: var(--radius) var(--radius) 0 0;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.06));
-      transition: filter 0.3s, background 0.3s;
+      transition: filter 0.2s, background 0.2s;
       background: #e8e8e8;
       display: block;
       aspect-ratio: 14/10;
     }
-    body.dark .story img {
-      border-color: #555;
-      filter: drop-shadow(0 0 3px rgba(255,255,255,0.10));
-      background: #232323;
-    }
-    .story img.loading {
-      filter: blur(6px) grayscale(80%);
-      background: #eaeaea;
-    }
+    .story img.loading { filter: blur(6px) grayscale(80%);}
     .story img.error {
       content: url('https://via.placeholder.com/140x100?text=News');
       background: #f2f2f2;
     }
     .story p {
       padding: 10px 7px 0 7px;
-      font-size: 15px;
-      line-height: 1.35;
+      font-size: 14.7px;
+      line-height: 1.32;
       height: 100px;
       overflow: hidden;
       flex-grow: 1;
@@ -244,75 +243,79 @@
     }
     .ad-box, .thread-box {
       margin: 0 0 12px 0;
-      padding: 18px 16px;
+      padding: 16px 13px;
       border-radius: var(--radius);
-      box-shadow: 0 0 12px rgba(0,0,0,0.07);
-      background: #fafbfe;
+      box-shadow: 0 0 12px rgba(0,0,0,0.06);
+      background: var(--glass);
       color: #222;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.24s, color 0.3s;
       width: 100%;
       max-width: 100%;
       position: relative;
+      border: 1.2px solid #e0e6f0;
     }
     body.dark .ad-box, body.dark .thread-box {
-      background: #1a1a1a;
+      background: var(--glass-dark);
       box-shadow: 0 0 16px rgba(255,255,255,0.09);
       color: #ddd;
+      border: 1.2px solid #23273a;
     }
     .disqus-section {
-      background: #fff;
+      background: var(--glass);
       border-radius: var(--radius);
-      box-shadow: 0 2px 24px rgba(0,0,0,0.13);
-      padding: 26px 24px 0 24px;
-      margin-top: 44px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.11);
+      padding: 24px 16px 0 16px;
+      margin-top: 36px;
       width: 100%;
       max-width: var(--main-width);
-      min-height: 360px;
+      min-height: 300px;
       position: relative;
       z-index: 10;
       border: 1px solid #eee;
     }
     body.dark .disqus-section {
-      background: #181818;
+      background: var(--glass-dark);
       box-shadow: 0 2px 28px rgba(255,255,255,0.07);
       border-color: #282828;
     }
     .disqus-section h2 {
-      font-size: 1.28rem;
+      font-size: 1.15rem;
       font-weight: 800;
       margin-bottom: 12px;
       color: var(--primary-hover);
       letter-spacing: -.5px;
     }
     .trends-box {
-      margin: 36px 0 0 0;
-      padding: 12px 0 10px 0;
+      margin: 30px 0 0 0;
+      padding: 11px 0 7px 0;
       border-radius: var(--radius);
-      box-shadow: 0 0 8px rgba(0,0,0,0.08);
-      background: #f7fafc;
+      box-shadow: 0 0 8px rgba(0,0,0,0.07);
+      background: var(--glass);
       color: #222;
       width: 100%;
       max-width: 100%;
-      min-height: 220px;
+      min-height: 180px;
+      border: 1.2px solid #e0e6f0;
     }
     body.dark .trends-box {
-      background: #22263b;
+      background: var(--glass-dark);
       color: #f4f8ff;
       box-shadow: 0 0 16px rgba(255,255,255,0.12);
+      border: 1.2px solid #23273a;
     }
     .trends-box iframe {
       width: 100%;
-      min-height: 340px;
+      min-height: 250px;
       border: none;
       border-radius: var(--radius);
       background: inherit;
       transition: box-shadow 0.2s;
-      box-shadow: 0 2px 16px rgba(58,142,230,0.10);
+      box-shadow: 0 2px 16px rgba(58,142,230,0.07);
     }
     a {
       color: var(--primary);
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.32s;
     }
     a:hover, a:focus {
       color: var(--primary-hover);
@@ -320,49 +323,50 @@
       outline: none;
     }
     .spinner {
-      width: 32px;
-      height: 32px;
-      border: 4px solid #ccc;
+      width: 28px;
+      height: 28px;
+      border: 4px solid #c4d0e0;
       border-top: 4px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 40px auto;
+      margin: 34px auto;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .error-msg {
       color: #b00020;
       font-weight: 600;
       text-align: center;
-      margin: 20px 0;
+      margin: 12px 0;
+      font-size: 1em;
     }
     @media (max-width: 1200px) {
       .layout { max-width: 100vw; }
       .main-content { max-width: 96vw; }
-      .sidebar { max-width: 280px; min-width: 200px; }
+      .sidebar { max-width: 230px; min-width: 140px; }
     }
     @media (max-width: 900px) {
-      .layout { flex-direction: column; gap: 0; padding-left: 0; padding-right: 0;}
+      .layout { flex-direction: column; gap: 0; }
       .main-content { max-width: 100vw; }
-      .sidebar { position: static; max-width: 100vw; flex-direction: row; gap: 18px; margin-bottom: 0; }
+      .sidebar { position: static; max-width: 100vw; flex-direction: row; gap: 13px;}
       .ad-box, .thread-box { max-width: 340px; margin: 0 10px 12px 0; }
     }
     @media (max-width: 700px) {
-      header { font-size: 1.3rem; height: 48px;}
-      .main-content { gap: 15px; }
-      .disqus-section { padding: 10px 2px 0 2px; }
-      .carousel-2row .story-container-row { gap: 10px; }
-      .sidebar { flex-direction: column; gap: 14px; }
+      header { font-size: 1.1rem; height: 44px;}
+      .main-content { gap: 12px; }
+      .disqus-section { padding: 8px 2px 0 2px; }
+      .carousel-2row .story-container-row { gap: 7px; }
+      .sidebar { flex-direction: column; gap: 9px; }
     }
     @media (max-width: 600px) {
-      .story { width: 120px; height: 190px; }
-      .story p { font-size: 13px; height: 80px; }
-      .disqus-section, .trends-box { min-height: 100px; }
+      .story { width: 100px; height: 165px; }
+      .story p { font-size: 12px; height: 55px; }
+      .disqus-section, .trends-box { min-height: 90px; }
       .sidebar { min-width: 0; max-width: 100vw; }
     }
     @media (max-width: 400px) {
-      .story { width: 98vw; height: 150px; }
+      .story { width: 98vw; height: 120px; }
       .disqus-section { padding: 4px 0 0 0;}
-      header { font-size: 1rem; }
+      header { font-size: .95rem; }
     }
     @media (max-width: 350px) {
       .layout { padding: 2px; }
@@ -416,6 +420,7 @@
     </div>
     <aside class="sidebar" aria-label="Sidebar">
       <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
+        <!-- HighPerformanceFormat Ad -->
         <script type="text/javascript">
           var atOptions = {
             'key' : '18d0d482298d34bd3713b4a42c4121c6',
@@ -425,15 +430,16 @@
             'params' : {}
           };
         </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js" async defer></script>
       </div>
       <div class="ad-box" role="complementary" aria-label="Advertisement - Profitablerate CPM">
-        <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
+        <!-- Profitablerate CPM Ad -->
+        <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js' async defer></script>
       </div>
     </aside>
   </div>
-  <script>
-    // --- Feed URLs ---
+  <script defer>
+    // ---- FEED URLS ----
     const feeds = [
       'https://www.capitalfm.co.ke/news/feed/',
       'https://www.standardmedia.co.ke/rss/headlines.php',
@@ -486,7 +492,7 @@
       'https://www.sportsnet.ca/feed/'
     ];
 
-    // --- Thumbnail Fetching ---
+    // ---- THUMBNAIL: best first, fallback last ----
     async function getBestThumbnail(item) {
       try {
         const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(item.link)}&meta=true`);
@@ -513,7 +519,7 @@
       return 'https://via.placeholder.com/140x100?text=News';
     }
 
-    // --- Utility: Show loading and error states ---
+    // ---- UTILS ----
     function showLoading(container) {
       container.innerHTML = '<div class="spinner" aria-label="Loading"></div>';
       container.setAttribute('aria-busy', 'true');
@@ -526,32 +532,50 @@
       container.appendChild(errorDiv);
       container.setAttribute('aria-busy', 'false');
     }
-
-    // --- Utility: Create story card ---
     function createStoryDiv(story) {
       const div = document.createElement('div');
       div.className = 'story';
+      div.setAttribute('tabindex', '0');
       div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
-        <img src="${story.img}" alt="${story.title}" loading="lazy">
+        <img src="${story.img}" alt="${story.title.replace(/["']/g,'')}" loading="lazy" draggable="false">
         <p>${story.title}</p>
       </a>`;
       const img = div.querySelector('img');
       img.onerror = () => {
         img.onerror = null;
+        img.classList.add('error');
         img.src = 'https://via.placeholder.com/140x100?text=News';
         img.alt = 'No thumbnail available';
       };
+      img.classList.add('loading');
+      img.onload = () => { img.classList.remove('loading'); };
       return div;
     }
 
-    // --- Responsive slice count for each carousel ---
+    // ---- RESPONSIVE SLICE ----
     function getSliceCount(base, min) {
       if (window.innerWidth < 400) return Math.max(min, base - 2);
       if (window.innerWidth < 700) return Math.max(min, base - 1);
       return base;
     }
 
-    // --- Feed Loader: parallel, fills rows on-the-fly, robust for sports ---
+    // ---- LAZY LOADING STORIES IN VIEW ONLY ----
+    function lazyLoadStories(carouselId, loader) {
+      const section = document.getElementById(carouselId);
+      if (!section) return;
+      let loaded = false;
+      function onEnter(entries, observer) {
+        if (entries[0].isIntersecting && !loaded) {
+          loaded = true;
+          loader();
+          observer.disconnect();
+        }
+      }
+      const io = new IntersectionObserver(onEnter, { threshold: 0.03 });
+      io.observe(section);
+    }
+
+    // ---- FASTEST STORY FETCH (Promise.any for speed) ----
     async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt) {
       const row1 = document.getElementById(row1Id);
       const row2 = document.getElementById(row2Id);
@@ -565,14 +589,14 @@
       let displayedLinks = new Set();
       let loadedAny = false;
 
-      // Helper to display as soon as a new story batch comes in
+      // Helper for fade-in and display
       function displayStories(batch) {
         allStories.push(...batch.filter(story =>
           story.title && story.link && !displayedLinks.has(story.link)
         ));
         allStories = allStories.slice(0, sliceCount * 2);
         allStories.forEach(s => displayedLinks.add(s.link));
-        // Split into two rows
+        // Split two rows
         const half = Math.ceil(allStories.length / 2);
         const row1Stories = allStories.slice(0, half);
         const row2Stories = allStories.slice(half);
@@ -584,8 +608,8 @@
         row2.setAttribute('aria-busy', 'false');
       }
 
-      // Parallel fetch, race to first batches
-      await Promise.all(feedList.map(async feed => {
+      // Promise.any: first successful feed gets displayed immediately for perceived speed
+      let promises = feedList.map(async feed => {
         try {
           const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
           if (!res.ok) throw new Error('Request failed');
@@ -601,14 +625,17 @@
             loadedAny = true;
             displayStories(thumbBatch);
           }
-        } catch (err) {
-          // Ignore here, error shown if all fail
+          return thumbBatch.length;
+        } catch {
+          return 0;
         }
-      }));
+      });
 
-      // --- Sports carousel fix: ensure enough stories for two rows ---
-      if (alt === 'sports' && allStories.length < sliceCount * 2) {
-        // Try to fill with more stories from the same feeds, up to double the needed count
+      // Wait for at least one batch to succeed, then continue filling up with others
+      await Promise.any(promises);
+
+      // Fallback: ensure enough stories, especially for sports
+      if (allStories.length < sliceCount * 2) {
         let extraStories = [];
         for (let feed of feedList) {
           try {
@@ -625,7 +652,6 @@
           if (allStories.length + extraStories.length >= sliceCount * 2) break;
         }
         allStories.push(...extraStories.slice(0, sliceCount * 2 - allStories.length));
-        // re-display
         displayStories([]);
       }
 
@@ -639,20 +665,42 @@
       }
     }
 
-    // --- Reload all carousels, adaptive per screen size ---
-    function reloadAll() {
+    // ---- CAROUSEL LAZY-LOADING AND RESIZE ----
+    function reloadAllCarousels() {
       loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story');
       loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop');
-      // For sports, try to show more items on wide screens (e.g. 4 per row, total 8)
       loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports');
     }
-    window.addEventListener('resize', reloadAll);
-    reloadAll();
-    setInterval(() => loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story'), 300000);
-    setInterval(() => loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
-    setInterval(() => loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports'), 240000);
+    // Lazy load: only load when visible for each, for speed
+    lazyLoadStories('stories-carousel', () => loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story'));
+    lazyLoadStories('hiphop-carousel', () => loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop'));
+    lazyLoadStories('sports-carousel', () => loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports'));
 
-    // --- Disqus comments widget ---
+    // Debounced resize event for reloads
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(reloadAllCarousels, 260);
+    });
+
+    // Periodic refresh, but only if carousel is visible
+    function isElementInViewport(id) {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.bottom > 0 && rect.top < window.innerHeight;
+    }
+    setInterval(() => {
+      if (isElementInViewport('stories-carousel')) loadFeedStories2Rows(feeds, getSliceCount(5, 2), 'stories-row1', 'stories-row2', 'story');
+    }, 300000);
+    setInterval(() => {
+      if (isElementInViewport('hiphop-carousel')) loadFeedStories2Rows(hiphopFeeds, getSliceCount(3, 2), 'hiphop-row1', 'hiphop-row2', 'hiphop');
+    }, 180000);
+    setInterval(() => {
+      if (isElementInViewport('sports-carousel')) loadFeedStories2Rows(sportsFeeds, getSliceCount(4, 2), 'sports-row1', 'sports-row2', 'sports');
+    }, 240000);
+
+    // ---- DISQUS COMMENTS ----
     var disqus_config = function () {
       this.page.url = window.location.href;
       this.page.identifier = window.location.pathname;
@@ -664,7 +712,7 @@
       (d.head || d.body).appendChild(s);
     })();
 
-    // --- Theme logic ---
+    // ---- THEME LOGIC ----
     function applyTheme(theme) {
       document.body.classList.remove('light', 'dark');
       document.body.classList.add(theme);
@@ -682,6 +730,9 @@
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const themeToApply = saved || (prefersDark ? 'dark' : 'light');
       applyTheme(themeToApply);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light');
+      });
     })();
   </script>
 </body>
