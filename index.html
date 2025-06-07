@@ -6,43 +6,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="5wBQcPlkGq-D7yoWyplD9c_Z7XQo_spaGc4FkSu6ejs" />
   <meta name="google-adsense-account" content="ca-pub-6967873714106764" />
-  <title>Testagram - Trending News & More</title>
-  <meta name="description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
-  <meta name="keywords" content="news, hip hop, sports, RSS, trending, Testagram" />
+  <title>Testagram - World-Class Trending News & More</title>
+  <meta name="description" content="Stay updated with the latest news, hip hop stories, and sports highlights from 80+ world-class RSS feeds. Powered by Testagram." />
+  <meta name="keywords" content="news, hip hop, sports, RSS, trending, Testagram, world-class, aggregator, Africa, global, tech, entertainment, finance" />
   <meta name="author" content="Testagram Team" />
   <!-- Open Graph & Twitter Cards -->
-  <meta property="og:title" content="Testagram - Trending News & More" />
-  <meta property="og:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
+  <meta property="og:title" content="Testagram - World-Class Trending News & More" />
+  <meta property="og:description" content="Stay updated with the latest news, hip hop stories, and sports highlights from 80+ world-class RSS feeds." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dreez-cell.github.io/" />
   <meta property="og:image" content="https://dreez-cell.github.io/preview.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Testagram - Trending News & More" />
+  <meta name="twitter:title" content="Testagram - World-Class Trending News & More" />
   <meta name="twitter:description" content="Stay updated with the latest news, hip hop stories, and sports highlights. Powered by Testagram." />
   <meta name="twitter:image" content="https://dreez-cell.github.io/preview.png" />
-
-  <!-- Canonical for SEO -->
   <link rel="canonical" href="https://dreez-cell.github.io/" />
-  <!-- PWA Manifest & Icons -->
   <link rel="manifest" href="/manifest.json">
-  <link rel="apple-touch-icon" href="https://dreez-cell.github.io/apple-touch-icon.png">
-  <!-- Favicon -->
+  <link rel="apple-touch-icon" href="https://dreez-cell.github.io/icon-192.png">
   <link rel="icon" href="https://dreez-cell.github.io/favicon.ico" type="image/x-icon" />
-  <!-- Preconnect & DNS Prefetch -->
-  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-  <link rel="preconnect" href="https://www.gstatic.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://api.rss2json.com">
   <link rel="dns-prefetch" href="https://api.microlink.io">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+  <!-- Structured Data (JSON-LD for site and articles) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Testagram",
+      "url": "https://dreez-cell.github.io/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://dreez-cell.github.io/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
   <!-- CSP for security -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     img-src * data:;
-    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://celebrity-gossip-3.disqus.com https://pl22779142.profitableratecpm.com https://www.highperformanceformat.com;
+    script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.gstatic.com https://api.microlink.io https://api.rss2json.com https://celebrity-gossip-3.disqus.com https://pl22*;
     style-src 'self' 'unsafe-inline';
     frame-src *;
     connect-src *;
   ">
-
   <!-- Google Adsense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6967873714106764" crossorigin="anonymous"></script>
   <!-- Accessibility & Responsive CSS -->
@@ -75,29 +84,30 @@
     body.light { background: var(--bg-light); color: #000; }
     body.dark { background: var(--bg-dark); color: #eee; }
     header {
-      height: 56px;
+      height: 64px;
       width: 100%;
       max-width: var(--container-max);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      font-size: 22px;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border-light);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      border-bottom: 1.5px solid var(--border-light);
       background: inherit;
       color: inherit;
-      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.07);
       position: sticky;
       top: 0;
       z-index: 100;
     }
     body.dark header {
       border-color: var(--border-dark);
-      box-shadow: 0 2px 8px rgb(255 255 255 / 0.1);
+      box-shadow: 0 2px 8px rgb(255 255 255 / 0.09);
     }
     .theme-toggle {
-      font-size: 22px;
+      font-size: 2rem;
       background: none;
       border: none;
       cursor: pointer;
@@ -123,19 +133,38 @@
       top: 10px;
       outline: 2px solid var(--primary);
     }
+    nav[aria-label="Main navigation"] {
+      display: flex;
+      gap: 18px;
+      font-size: 1.2rem;
+    }
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background .2s;
+    }
+    nav a:focus, nav a:hover {
+      background: var(--primary);
+      color: #fff;
+      outline: none;
+    }
     main {
       max-width: var(--container-max);
       width: 100%;
       padding: 15px 10px;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 34px;
     }
     section > h2 {
       margin-bottom: 8px;
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.35rem;
+      font-weight: 800;
       letter-spacing: -.5px;
+      color: var(--primary);
     }
     /* --- Carousel 2-row layout --- */
     .carousel-2row {
@@ -152,37 +181,35 @@
       scroll-behavior: smooth;
       min-height: 0;
     }
-    /* Remove bottom border for rows except last in carousel */
     .carousel-2row .story-container-row:last-child {
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1.5px solid var(--border-light);
     }
     body.dark .carousel-2row .story-container-row:last-child {
       border-color: #444;
     }
-    body.light .carousel-2row .story-container-row:last-child {
-      border-color: #ddd;
-    }
     .story {
       flex: 0 0 auto;
-      width: 140px;
-      height: 220px;
+      width: 146px;
+      height: 232px;
       background: #eee;
-      border-radius: 8px;
+      border-radius: 12px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 0 7px rgba(0,0,0,0.10);
+      transition: transform 0.22s, box-shadow 0.28s;
       display: flex;
       flex-direction: column;
       color: inherit;
+      position: relative;
     }
     body.dark .story {
-      background: #2a2a2a;
-      box-shadow: 0 0 8px rgba(255,255,255,0.07);
+      background: #232323;
+      box-shadow: 0 0 9px rgba(255,255,255,0.06);
     }
-    .story:hover {
+    .story:hover, .story:focus-within {
       transform: scale(1.07);
-      box-shadow: 0 0 14px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(0,0,0,0.19);
+      z-index: 2;
     }
     .story a {
       color: inherit;
@@ -193,41 +220,49 @@
     }
     .story img {
       width: 100%;
-      height: 100px;
+      height: 104px;
       object-fit: cover;
       border-bottom: 1px solid #ccc;
       flex-shrink: 0;
-      border-radius: 8px 8px 0 0;
+      border-radius: 12px 12px 0 0;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.05));
       transition: filter 0.3s;
     }
     body.dark .story img {
       border-color: #555;
-      filter: drop-shadow(0 0 3px rgba(255,255,255,0.1));
+      filter: drop-shadow(0 0 3px rgba(255,255,255,0.07));
     }
     .story p {
       padding: 8px 6px;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.3;
-      height: 100px;
+      height: 104px;
       overflow: hidden;
       flex-grow: 1;
       text-align: left;
       font-weight: 600;
     }
+    .story time {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 2px;
+      display: block;
+      text-align: right;
+      padding-right: 6px;
+    }
     .ad-box, .thread-box {
-      margin: 15px auto;
-      padding: 14px;
-      border-radius: 6px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 320px;
+      margin: 17px auto;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.04);
+      max-width: 350px;
       background: #fafafa;
       color: #222;
       transition: background 0.3s, color 0.3s;
     }
     body.dark .ad-box, body.dark .thread-box {
-      background: #1a1a1a;
-      box-shadow: 0 0 12px rgba(255,255,255,0.07);
+      background: #181818;
+      box-shadow: 0 0 13px rgba(255,255,255,0.05);
       color: #ddd;
     }
     iframe {
@@ -235,7 +270,7 @@
       height: 480px;
       border: none;
       background: inherit;
-      border-radius: 6px;
+      border-radius: 8px;
     }
     a {
       color: var(--primary);
@@ -248,42 +283,107 @@
       outline: none;
     }
     .spinner {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border: 4px solid #ccc;
       border-top: 4px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 40px auto;
+      margin: 42px auto;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .error-msg {
       color: #b00020;
       font-weight: 600;
       text-align: center;
-      margin: 20px 0;
+      margin: 21px 0;
     }
+    .search-bar {
+      margin: 0 auto 16px;
+      max-width: 530px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .search-bar input[type="search"] {
+      flex: 1;
+      padding: 8px 11px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border-light);
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .search-bar input[type="search"]:focus {
+      border-color: var(--primary);
+    }
+    .search-bar button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .search-bar button:focus, .search-bar button:hover {
+      background: var(--primary-hover);
+    }
+    .search-results {
+      max-width: var(--container-max);
+      margin: 0 auto 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      min-height: 36px;
+    }
+    .search-results .story {
+      width: 180px;
+      height: 238px;
+    }
+    .site-footer {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-top: 30px;
+      padding: 20px 10px 10px 10px;
+      border-top: 1.5px solid #e0e0e0;
+      color: #888;
+      font-size: 0.9rem;
+      background: inherit;
+    }
+    .site-footer a { color: var(--primary-hover); }
     @media (max-width: 600px) {
-      .story { width: 120px; height: 190px; }
-      .story p { font-size: 13px; height: 80px; }
+      .story { width: 126px; height: 180px; }
+      .story p { font-size: 13px; height: 60px; }
       iframe { height: 320px; }
-      header { font-size: 18px; height: 48px; }
+      header { font-size: 1.15rem; height: 48px; }
       .carousel-2row .story-container-row { gap: 10px; }
+      .search-results .story { width: 98vw; height: 170px; }
     }
   </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-  <noscript>
-    <div style="color: red; text-align: center;">
-      JavaScript is required for the full experience. Please enable it in your browser.
-    </div>
-  </noscript>
-  <header>
+  <header role="banner">
     <span>Testagram</span>
+    <nav aria-label="Main navigation">
+      <a href="#general-news-title">General</a>
+      <a href="#hiphop-news-title">Hip Hop</a>
+      <a href="#sports-magazine-title">Sports</a>
+      <a href="#trending">Trending</a>
+      <a href="#comments">Comments</a>
+      <a href="/sitemap.xml" rel="sitemap">Sitemap</a>
+    </nav>
     <button class="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle dark/light theme" onclick="toggleTheme()">🌙</button>
   </header>
   <main id="main" role="main">
+    <form class="search-bar" role="search" aria-label="Search articles" autocomplete="off" onsubmit="event.preventDefault(); searchArticles();">
+      <input type="search" id="search-input" placeholder="Search news, hip hop, sports..." aria-label="Search articles" />
+      <button type="submit" aria-label="Search">🔍</button>
+    </form>
+    <div id="search-results" class="search-results" aria-live="polite" aria-atomic="false"></div>
     <!-- General News Stories -->
     <section aria-labelledby="general-news-title">
       <h2 id="general-news-title">General News</h2>
@@ -292,22 +392,17 @@
         <div id="stories-row2" class="story-container-row" role="list"></div>
       </div>
     </section>
-    <!-- HighPerformanceFormat Ad -->
-    <div class="ad-box" role="complementary" aria-label="Advertisement - HighPerformanceFormat">
-      <script type="text/javascript">
-        var atOptions = {
-          'key' : '18d0d482298d34bd3713b4a42c4121c6',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
+    <!-- Optimized Ads -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6967873714106764"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
-    </div>
-    <!-- Profitablerate CPM Ad -->
-    <div class="ad-box" role="complementary" aria-label="Advertisement - Profitablerate CPM">
-      <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
     </div>
     <!-- Hip Hop Stories -->
     <section aria-labelledby="hiphop-news-title">
@@ -317,6 +412,10 @@
         <div id="hiphop-row2" class="story-container-row" role="list"></div>
       </div>
     </section>
+    <!-- Optimized Ads 2 -->
+    <div class="ad-box" role="complementary" aria-label="Advertisement">
+      <script type='text/javascript' src='//pl22779142.profitableratecpm.com/17/39/90/173990df9793db05ffad154cf2782fd5.js'></script>
+    </div>
     <!-- Sports Magazine Slider Section -->
     <section aria-labelledby="sports-magazine-title">
       <h2 id="sports-magazine-title">Sports Magazine</h2>
@@ -326,103 +425,155 @@
       </div>
     </section>
     <!-- Embedded Trends iframe -->
-    <section aria-label="Trending topics iframe" style="max-width: 1200px;">
+    <section aria-label="Trending topics iframe" id="trending" style="max-width: 1200px;">
       <div class="thread-box" role="region" aria-live="polite" aria-label="Embedded trending topics">
-        <iframe src="https://dreez-cell.github.io/Trends/" title="Trending Topics" loading="lazy"></iframe>
+        <iframe src="https://dreez-cell.github.io/Trends/" title="Trending Topics" loading="lazy" aria-label="Trending Topics"></iframe>
       </div>
     </section>
     <!-- Disqus Comments Section -->
-    <section aria-label="Comments" style="max-width: 1200px;">
+    <section aria-label="Comments" id="comments" style="max-width: 1200px;">
       <div class="thread-box" role="region">
         <div id="disqus_thread"></div>
       </div>
     </section>
   </main>
-
-  <!-- Firebase Analytics -->
+  <footer class="site-footer" role="contentinfo">
+    <p>
+      &copy; 2025 Testagram. All rights reserved. | 
+      <a href="https://dreez-cell.github.io/sitemap.xml">Sitemap</a> | 
+      <a href="https://dreez-cell.github.io/privacy.html">Privacy</a>
+    </p>
+    <p>
+      <strong>Contact:</strong> <a href="mailto:info@testagram.com">info@testagram.com</a> |
+      Built for speed, accessibility, and discovery.
+    </p>
+    <p>
+      <strong>Follow:</strong>
+      <a href="https://twitter.com/testagram" rel="noopener noreferrer" target="_blank" aria-label="Twitter">Twitter</a> |
+      <a href="https://facebook.com/testagram" rel="noopener noreferrer" target="_blank" aria-label="Facebook">Facebook</a>
+    </p>
+  </footer>
+  <!-- Firebase Analytics (deferred) -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
-      authDomain: "teatagram-a3a8f.firebaseapp.com",
-      projectId: "teatagram-a3a8f",
-      storageBucket: "teatagram-a3a8f.appspot.com",
-      messagingSenderId: "835709485105",
-      appId: "1:835709485105:web:f70765b17d028e6e219510",
-      measurementId: "G-XF2WKT1TTE"
-    };
-    try {
-      const app = initializeApp(firebaseConfig);
-      getAnalytics(app);
-    } catch(e) {
-      console.warn('Firebase Analytics could not be initialized:', e);
-    }
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js");
+        const { getAnalytics } = await import("https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js");
+        const firebaseConfig = {
+          apiKey: "AIzaSyBWb97lOaeRDlyC7kseF5OzZvFBTAtorJQ",
+          authDomain: "teatagram-a3a8f.firebaseapp.com",
+          projectId: "teatagram-a3a8f",
+          storageBucket: "teatagram-a3a8f.appspot.com",
+          messagingSenderId: "835709485105",
+          appId: "1:835709485105:web:f70765b17d028e6e219510",
+          measurementId: "G-XF2WKT1TTE"
+        };
+        const app = initializeApp(firebaseConfig);
+        getAnalytics(app);
+      } catch(e) {
+        // Silent fail
+      }
+    });
   </script>
-
   <script>
-    // --- FEEDS ---
+    // --- FEEDS: 80+ WORLD-CLASS RSS SOURCES ---
     const feeds = [
       'https://www.capitalfm.co.ke/news/feed/',
       'https://www.standardmedia.co.ke/rss/headlines.php',
       'https://www.kenyanwallstreet.com/feed/',
-      'https://www.tuko.co.ke/rss/',
-      'https://www.ghafla.com/ke/feed/',
+      'https://www.tuko.co.ke/rss/', 'https://www.ghafla.com/ke/feed/',
       'https://www.nation.africa/kenya/rss',
-      'https://www.pd.co.ke/feed/',
-      'https://www.kenyan-post.com/feeds/posts/default',
-      'https://www.theeastafrican.co.ke/rss.xml',
-      'https://www.tuko.co.ke/rss/all.rss',
-      'https://www.kenyans.co.ke/feeds/news',
-      'https://citizen.digital/news/rss',
-      'https://www.businessdailyafrica.com/rss',
-      'https://feeds.bbci.co.uk/news/world/africa/rss.xml',
-      'https://tech-ish.com/feed/',
-      'https://www.nation.africa/kenya/business/rss',
-      'https://nairobinews.nation.africa/rss',
-      'https://www.kbc.co.ke/feed/'
+      'https://www.pd.co.ke/feed/', 'https://www.kenyan-post.com/feeds/posts/default',
+      'https://www.theeastafrican.co.ke/rss.xml', 'https://www.tuko.co.ke/rss/all.rss',
+      'https://www.kenyans.co.ke/feeds/news','https://citizen.digital/news/rss',
+      'https://www.businessdailyafrica.com/rss','https://feeds.bbci.co.uk/news/world/africa/rss.xml',
+      'https://tech-ish.com/feed/','https://www.nation.africa/kenya/business/rss',
+      'https://nairobinews.nation.africa/rss','https://www.kbc.co.ke/feed/',
+      'https://www.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+      'https://rss.cnn.com/rss/cnn_topstories.rss',
+      'https://www.aljazeera.com/xml/rss/all.xml',
+      'https://www.theguardian.com/world/rss',
+      'https://feeds.skynews.com/feeds/rss/world.xml',
+      'https://www.reutersagency.com/feed/?best-topics=africa&post_type=best',
+      'https://www.dw.com/en/top-stories/s-9097?maca=en-rss-en-all-1573-rdf',
+      'https://www.foxnews.com/about/rss',
+      'https://feeds.feedburner.com/time/world',
+      'https://feeds.a.dj.com/rss/RSSWorldNews.xml',
+      'https://rss.nytimes.com/services/xml/rss/nyt/Africa.xml',
+      'https://www.voanews.com/rss',
+      'https://www.independent.co.uk/news/world/rss',
+      'https://www.latimes.com/world/rss2.0.xml',
+      'https://www.france24.com/en/rss',
+      'https://www.cnbcafrica.com/feed/',
+      'https://www.bloomberg.com/feed/podcast/etf-report.xml',
+      'https://apnews.com/rss/apf-topnews',
+      'https://www.forbes.com/africa/feed/',
+      'https://www.bbc.com/news/world/rss.xml',
+      'https://www.enca.com/rss.xml',
+      'https://www.news24.com/rss',
+      'https://www.sowetanlive.co.za/rss/?section=news',
+      'https://mg.co.za/feed/',
+      'https://www.businessinsider.co.za/rss',
+      'https://www.citizen.co.za/news/feed/',
+      'https://www.fin24.com/rss',
+      'https://www.dailysun.co.za/rss',
+      'https://www.timeslive.co.za/rss/?section=news',
+      'https://www.ghanaweb.com/GhanaHomePage/NewsArchive/headlines.feed',
+      'https://www.pulse.com.gh/news.rss',
+      'https://www.vanguardngr.com/feed/',
+      'https://punchng.com/feed/',
+      'https://www.premiumtimesng.com/feed',
+      'https://www.dailytrust.com.ng/feed',
+      'https://guardian.ng/feed/',
+      'https://www.sunnewsonline.com/feed/',
+      'https://thenationonlineng.net/feed/',
+      'https://www.dailynews.co.tz/feed/',
+      'https://www.ippmedia.com/en/rss.xml',
+      'https://www.monitor.co.ug/rss.xml',
+      'https://www.standardmedia.co.ke/rss/kenya.php',
+      'https://www.k24tv.co.ke/feed/',
+      'https://www.ghpage.com/feed/',
+      'https://www.pulse.ng/news.rss',
+      'https://news.trust.org/rss/news/',
+      'https://www.egypttoday.com/rss',
+      'https://www.zawya.com/rssfeeds/all-news/',
+      'https://www.middleeasteye.net/rss',
+      'https://english.alarabiya.net/en/tools/rss.html',
+      'https://www.arabnews.com/cat/rss.xml',
+      'https://www.moroccoworldnews.com/feed',
+      'https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf'
     ];
     const hiphopFeeds = [
-      'https://allhiphop.com/feed/',
-      'https://www.xxlmag.com/feed/',
-      'https://hiphopwired.com/feed/',
-      'https://hiphop-n-more.com/feed/',
-      'https://undergroundhiphopblog.com/feed/',
-      'https://thesource.com/feed/',
-      'https://ambrosiaforheads.com/feed/',
-      'https://rapindustry.com/feed/',
-      'https://dilemaradio.com/feed/',
-      'https://spiceonthebeat.com/feed/',
-      'https://uproxx.com/music/feed/',
-      'https://www.okayplayer.com/feed',
-      'https://hiphopvibe.com/feed/',
-      'https://djbooth.net/rss/all',
-      'https://rapzilla.com/feed/',
-      'https://hiphopgoldenage.com/feed/',
-      'https://rapradar.com/feed/',
-      'https://respectmyregion.com/feed/',
-      'https://siccness.net/rss.xml'
+      'https://allhiphop.com/feed/','https://www.xxlmag.com/feed/','https://hiphopwired.com/feed/',
+      'https://hiphop-n-more.com/feed/','https://undergroundhiphopblog.com/feed/','https://thesource.com/feed/',
+      'https://ambrosiaforheads.com/feed/','https://rapindustry.com/feed/','https://dilemaradio.com/feed/',
+      'https://spiceonthebeat.com/feed/','https://uproxx.com/music/feed/','https://www.okayplayer.com/feed',
+      'https://hiphopvibe.com/feed/','https://djbooth.net/rss/all','https://rapzilla.com/feed/',
+      'https://hiphopgoldenage.com/feed/','https://rapradar.com/feed/','https://respectmyregion.com/feed/',
+      'https://siccness.net/rss.xml','https://www.hiphopdx.com/rss','https://www.hotnewhiphop.com/rss/news.xml',
+      'https://www.complex.com/music/rss.xml','https://www.ballerstatus.com/feed/','https://thisis50.com/feed/',
+      'https://www.2dopeboyz.com/feed/','https://hiphopsince1987.com/feed/','https://hiphopcanada.com/feed/',
+      'https://www.trapital.co/feed/','https://www.worldstarhiphop.com/videos/rss',
+      'https://rhymejunkie.com/feed/','https://hiphopoverload.com/feed/'
     ];
-    // --- SPORTS FEEDS: FIXED & CLEANED FOR RELIABILITY ---
     const sportsFeeds = [
-      // Only include valid, reliable, and CORS-friendly RSS sources
-      'https://www.espn.com/espn/rss/news',
-      'https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
-      'https://www.skysports.com/rss/12040',
-      'https://www.nba.com/rss/nba_rss.xml',
-      'https://www.nfl.com/rss/rsslanding?searchString=home',
-      'https://www.goal.com/feeds/en/news/africa/1',
-      // Remove known-broken or CORS-blocked feeds (cafonline.com & supersport.com often fail)
-      // 'https://www.cafonline.com/rss', // removed (CORS/RSS issues)
-      // 'https://www.supersport.com/rss', // removed (CORS/RSS issues)
-      // If you want, add more known working sports feeds here:
-      'https://www.si.com/rss/si_topstories.rss',
-      'https://www.sportsnet.ca/feed/'
+      'https://www.espn.com/espn/rss/news','https://feeds.bbci.co.uk/sport/rss.xml?edition=uk',
+      'https://www.skysports.com/rss/12040','https://www.nba.com/rss/nba_rss.xml',
+      'https://www.nfl.com/rss/rsslanding?searchString=home','https://www.goal.com/feeds/en/news/africa/1',
+      'https://www.si.com/rss/si_topstories.rss','https://www.sportsnet.ca/feed/',
+      'https://www.cbssports.com/rss/headlines/','https://www.eurosport.com/rss.xml',
+      'https://www.fifa.com/rss-feeds/news','https://www.formula1.com/rss.xml',
+      'https://www.espncricinfo.com/rss/content/story/feeds/0.xml','https://www.olympicchannel.com/en/news/rss',
+      'https://www.rugbyworld.com/feed','https://www.foxsports.com/feedout/syndicatedContent?categoryId=0',
+      'https://www.sportingnews.com/us/rss','https://www.tennis.com/feed/',
+      'https://www.golfdigest.com/feed/rss','https://www.cyclingnews.com/rss/news/'
     ];
+
+    // --- Article index for search and sitemap ---
+    let articleIndex = [];
 
     // --- IMAGE UTILS ---
     async function extractImageFromHTML(html) {
-      // Use a DOMParser for more robust extraction (fallback to placeholder if no image found)
       try {
         if (!html) return 'https://via.placeholder.com/140x100?text=No+Image';
         const doc = new DOMParser().parseFromString(html, "text/html");
@@ -448,7 +599,6 @@
       container.setAttribute('aria-busy', 'true');
     }
     function showError(container, msg = 'Some feeds failed to load. Please check your internet connection or try again later.') {
-      // Remove all previous error messages
       [...container.querySelectorAll('.error-msg')].forEach(e => e.remove());
       const errorDiv = document.createElement('div');
       errorDiv.className = 'error-msg';
@@ -458,59 +608,70 @@
     }
 
     // --- MAIN FEED LOADER for 2-row carousels ---
-    async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt) {
+    async function loadFeedStories2Rows(feedList, sliceCount, row1Id, row2Id, alt, updateIndex = false) {
       const row1 = document.getElementById(row1Id);
       const row2 = document.getElementById(row2Id);
       if (!row1 || !row2) return;
-      showLoading(row1);
-      showLoading(row2);
-      row1.innerHTML = '';
-      row2.innerHTML = '';
+      showLoading(row1); showLoading(row2);
+      row1.innerHTML = ''; row2.innerHTML = '';
       let loadedAny = false;
       let allStories = [];
-      // Load feeds one-by-one, fallback to next if current fails, but keep going (robustness)
-      for (let feed of feedList) {
+      // Fetch feeds in parallel, but load each feed separately to avoid API block
+      await Promise.all(feedList.map(async (feed, feedNum) => {
         try {
+          await new Promise(res => setTimeout(res, feedNum * 120)); // stagger for API
           const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
           if (!res.ok) throw new Error('Request failed');
           const data = await res.json();
           if (!data.items || !Array.isArray(data.items) || data.items.length === 0) throw new Error('Invalid/empty RSS data');
-          // Only grab entries with title & link
-          const items = data.items.slice(0, sliceCount).filter(item => item && item.title && item.link);
+          const items = data.items
+            .filter(item => item && item.title && item.link && item.pubDate)
+            .map(item => ({
+              ...item,
+              pubDateObj: new Date(item.pubDate)
+            }))
+            .sort((a, b) => b.pubDateObj - a.pubDateObj) // sort by date, latest first
+            .slice(0, sliceCount);
           for (let item of items) {
             const img = await getMicrolinkImage(item.link, item.content || item.description, item.title);
             allStories.push({
               link: item.link,
               title: item.title,
-              img
+              img,
+              pubDate: item.pubDate,
+              pubDateObj: item.pubDateObj,
+              section: alt
             });
             loadedAny = true;
           }
         } catch (err) {
-          console.error(`${alt} Feed error:`, feed, err);
+          // console.error(`${alt} Feed error:`, feed, err);
         }
-      }
-      // Distribute stories into 2 rows
+      }));
+      // Sort and split for latest-to-oldest
+      allStories.sort((a, b) => b.pubDateObj - a.pubDateObj);
       const half = Math.ceil(allStories.length / 2);
       const row1Stories = allStories.slice(0, half);
       const row2Stories = allStories.slice(half);
       for (let story of row1Stories) {
         const div = document.createElement('div');
         div.className = 'story';
-        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
-  <img src="${story.img}" alt="${story.title}">
-  <p></p>
-</a>`;
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer" tabindex="0">
+          <img src="${story.img}" alt="${story.title}">
+          <time datetime="${story.pubDate}">${new Date(story.pubDate).toLocaleDateString()}</time>
+          <p></p>
+        </a>`;
         div.querySelector('p').textContent = story.title;
         row1.appendChild(div);
       }
       for (let story of row2Stories) {
         const div = document.createElement('div');
         div.className = 'story';
-        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer">
-  <img src="${story.img}" alt="${story.title}">
-  <p></p>
-</a>`;
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer" tabindex="0">
+          <img src="${story.img}" alt="${story.title}">
+          <time datetime="${story.pubDate}">${new Date(story.pubDate).toLocaleDateString()}</time>
+          <p></p>
+        </a>`;
         div.querySelector('p').textContent = story.title;
         row2.appendChild(div);
       }
@@ -523,20 +684,78 @@
       }
       row1.setAttribute('aria-busy', 'false');
       row2.setAttribute('aria-busy', 'false');
+
+      // Article index for search and sitemap
+      if (updateIndex) {
+        articleIndex = articleIndex.concat(allStories);
+      }
     }
 
     // --- LOAD & REFRESH ---
     function reloadAll() {
-      loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story');
-      loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop');
-      loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports');
+      articleIndex = [];
+      loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'general', true);
+      loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop', true);
+      loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports', true);
     }
     reloadAll();
-    setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'story'), 300000);
-    setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop'), 180000);
-    setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports'), 240000);
+    setInterval(() => loadFeedStories2Rows(feeds, 5, 'stories-row1', 'stories-row2', 'general', true), 360000);
+    setInterval(() => loadFeedStories2Rows(hiphopFeeds, 3, 'hiphop-row1', 'hiphop-row2', 'hiphop', true), 210000);
+    setInterval(() => loadFeedStories2Rows(sportsFeeds, 2, 'sports-row1', 'sports-row2', 'sports', true), 270000);
 
-    // --- DISQUS ---
+    // --- SEARCH ---
+    function searchArticles() {
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
+      const resultsDiv = document.getElementById('search-results');
+      resultsDiv.innerHTML = '';
+      if (!q || !articleIndex.length) return;
+      const results = articleIndex.filter(story =>
+        story.title.toLowerCase().includes(q) ||
+        (story.section && story.section.toLowerCase().includes(q))
+      ).sort((a, b) => b.pubDateObj - a.pubDateObj).slice(0, 20);
+      if (!results.length) {
+        resultsDiv.innerHTML = '<div class="error-msg">No articles found for your search.</div>';
+        return;
+      }
+      for (const story of results) {
+        const div = document.createElement('div');
+        div.className = 'story';
+        div.innerHTML = `<a href="${story.link}" target="_blank" rel="noopener noreferrer" tabindex="0">
+          <img src="${story.img}" alt="${story.title}">
+          <time datetime="${story.pubDate}">${new Date(story.pubDate).toLocaleDateString()}</time>
+          <p></p>
+        </a>`;
+        div.querySelector('p').textContent = story.title;
+        resultsDiv.appendChild(div);
+      }
+    }
+
+    // Keyboard accessibility for search
+    document.getElementById('search-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') searchArticles();
+    });
+
+    // --- SITEMAP GENERATION (for SPA) ---
+    // On demand, write a sitemap compatible with search engines, for loaded articles
+    function generateSitemap() {
+      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+      const base = 'https://dreez-cell.github.io/';
+      const today = new Date().toISOString();
+      xml += `<url><loc>${base}</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>\n`;
+      (articleIndex || []).forEach(story => {
+        xml += `<url><loc>${story.link}</loc><lastmod>${story.pubDate || today}</lastmod><priority>0.8</priority></url>\n`;
+      });
+      xml += '</urlset>';
+      const blob = new Blob([xml], {type: 'application/xml'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = 'sitemap.xml';
+      document.body.appendChild(link); link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    }
+
+    // --- DISQUS EMBED: World-class, accessible, SEO-friendly ---
     var disqus_config = function () {
       this.page.url = window.location.href;
       this.page.identifier = window.location.pathname;
@@ -545,6 +764,9 @@
       var d = document, s = d.createElement('script');
       s.src = 'https://celebrity-gossip-3.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
+      s.setAttribute('async', 'async');
+      s.setAttribute('defer', 'defer');
+      s.setAttribute('crossorigin', 'anonymous');
       (d.head || d.body).appendChild(s);
     })();
 
@@ -567,6 +789,25 @@
       const themeToApply = saved || (prefersDark ? 'dark' : 'light');
       applyTheme(themeToApply);
     })();
+
+    // --- Lazy-load images for speed and data efficiency ---
+    document.addEventListener('DOMContentLoaded', function() {
+      let lazyImages = [].slice.call(document.querySelectorAll('img[loading="lazy"]'));
+      if ('IntersectionObserver' in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target;
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        });
+        lazyImages.forEach(function(lazyImage) {
+          lazyImageObserver.observe(lazyImage);
+        });
+      }
+    });
   </script>
 </body>
 </html>
