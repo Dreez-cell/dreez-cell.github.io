@@ -181,27 +181,6 @@
   .group-tabs button i {
     margin-right: 6px;
   }
-  /* Share buttons style */
-  #share-buttons {
-    padding:10px 0 0 0;
-    text-align:center;
-  }
-  #share-buttons a {
-    font-size: 1em;
-    margin: 0 8px;
-    text-decoration: none;
-    transition: color 0.2s;
-    vertical-align: middle;
-    display: inline-block;
-  }
-  #share-buttons a:hover {
-    text-decoration: underline;
-    color: #fff !important;
-  }
-  #share-buttons .fa-twitter { color: #1DA1F2; }
-  #share-buttons .fa-facebook { color: #1877F3; }
-  #share-buttons .fa-whatsapp { color: #25D366; }
-
   #disqus_thread {
     width: 100vw;
     min-height: 650px;
@@ -275,21 +254,19 @@
 <!-- Discussion groups tabs -->
 <div class="carousel-wrapper" aria-label="Discussion groups carousel" tabindex="0">
   <div class="group-tabs" role="tablist" aria-orientation="horizontal">
-    <button role="tab" onclick="window.location.hash='group-politics';loadDisqus('group-politics', this)"><i class="fas fa-landmark"></i> Politics</button>
-    <button role="tab" onclick="window.location.hash='group-fashion';loadDisqus('group-fashion', this)"><i class="fas fa-tshirt"></i> Fashion</button>
-    <button role="tab" onclick="window.location.hash='group-hiphop';loadDisqus('group-hiphop', this)"><i class="fas fa-microphone-alt"></i> Hiphop</button>
-    <button role="tab" onclick="window.location.hash='group-celebrity';loadDisqus('group-celebrity', this)"><i class="fas fa-star"></i> Celebrity</button>
-    <button role="tab" onclick="window.location.hash='group-billboard';loadDisqus('group-billboard', this)"><i class="fas fa-music"></i> Billboard</button>
-    <button role="tab" onclick="window.location.hash='group-news';loadDisqus('group-news', this)"><i class="fas fa-newspaper"></i> News</button>
-    <button role="tab" onclick="window.location.hash='group-technology';loadDisqus('group-technology', this)"><i class="fas fa-laptop-code"></i> Technology</button>
-    <button role="tab" onclick="window.location.hash='group-ai';loadDisqus('group-ai', this)"><i class="fas fa-robot"></i> AI</button>
-    <button role="tab" onclick="window.location.hash='group-jobs';loadDisqus('group-jobs', this)"><i class="fas fa-briefcase"></i> Jobs</button>
-    <button role="tab" onclick="window.location.hash='group-sports';loadDisqus('group-sports', this)"><i class="fas fa-football-ball"></i> Sports</button>
-    <button role="tab" onclick="window.location.hash='group-tech';loadDisqus('group-tech', this)"><i class="fas fa-tools"></i> Dev</button>
-    <button role="tab" onclick="window.location.hash='group-memes';loadDisqus('group-memes', this)"><i class="fas fa-face-laugh"></i> Memes</button>
+    <button role="tab" onclick="loadDisqus('group-politics', this)"><i class="fas fa-landmark"></i> Politics</button>
+    <button role="tab" onclick="loadDisqus('group-fashion', this)"><i class="fas fa-tshirt"></i> Fashion</button>
+    <button role="tab" onclick="loadDisqus('group-hiphop', this)"><i class="fas fa-microphone-alt"></i> Hiphop</button>
+    <button role="tab" onclick="loadDisqus('group-celebrity', this)"><i class="fas fa-star"></i> Celebrity</button>
+    <button role="tab" onclick="loadDisqus('group-billboard', this)"><i class="fas fa-music"></i> Billboard</button>
+    <button role="tab" onclick="loadDisqus('group-news', this)"><i class="fas fa-newspaper"></i> News</button>
+    <button role="tab" onclick="loadDisqus('group-technology', this)"><i class="fas fa-laptop-code"></i> Technology</button>
+    <button role="tab" onclick="loadDisqus('group-ai', this)"><i class="fas fa-robot"></i> AI</button>
+    <button role="tab" onclick="loadDisqus('group-jobs', this)"><i class="fas fa-briefcase"></i> Jobs</button>
+    <button role="tab" onclick="loadDisqus('group-sports', this)"><i class="fas fa-football-ball"></i> Sports</button>
+    <button role="tab" onclick="loadDisqus('group-tech', this)"><i class="fas fa-tools"></i> Dev</button>
+    <button role="tab" onclick="loadDisqus('group-memes', this)"><i class="fas fa-face-laugh"></i> Memes</button>
   </div>
-  <!-- Share buttons for the selected group -->
-  <div id="share-buttons"></div>
 </div>
 
 <!-- Disqus comments container -->
@@ -307,10 +284,8 @@
     document.querySelectorAll('.group-tabs button').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 
-    updateShareLinks(groupId); // Show share buttons for current group
-
     const disqus_config = function () {
-      this.page.url = `https://dreez-cell.github.io/Social/#${groupId}`;
+      this.page.url = `https://github.com/Dreez-cell/Trends/${groupId}`;
       this.page.identifier = groupId;
     };
 
@@ -327,18 +302,6 @@
       s.setAttribute('data-timestamp', +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-
-  // Social Share Link Generator for Groups
-  function updateShareLinks(groupId) {
-    const url = `https://dreez-cell.github.io/Social/#${groupId}`;
-    const groupName = groupId.replace('group-','').replace(/^\w/, c => c.toUpperCase());
-    document.getElementById('share-buttons').innerHTML = `
-      <span style="color:#888;font-size:0.97em;margin-right:10px;">Share this group:</span>
-      <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=Join the ${groupName} discussion on Testagram!" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" title="Share on Facebook"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://wa.me/?text=Join%20the%20${groupName}%20discussion%20on%20Testagram!%20${encodeURIComponent(url)}" target="_blank" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    `;
   }
 
   // RSS feeds to pull news from
@@ -413,17 +376,6 @@
 
   window.onload = () => {
     loadRSSFeeds();
-    // On load: if there is a hash, activate corresponding tab and load Disqus
-    if (window.location.hash) {
-      const groupId = window.location.hash.substring(1);
-      // Find button with matching onclick handler
-      const btn = Array.from(document.querySelectorAll('.group-tabs button'))
-        .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(groupId));
-      if (btn) {
-        loadDisqus(groupId, btn);
-        updateShareLinks(groupId);
-      }
-    }
   };
 </script>
 
