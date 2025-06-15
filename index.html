@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Testagram - Threads & Stories Style</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background-color: #000;
+    color: #ccc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+  a {
+    color: #ccc;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  header {
+    width: 100%;
+    padding: 20px 30px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 1px solid #222;
+    user-select: none;
+    background-color: #000;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  #news-carousel-wrapper {
+    width: 100vw;
+    height: 190px;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    background: #111;
+    padding: 12px 12px 8px 12px;
+    border-bottom: 1px solid #222;
+  }
+  #news-carousel-wrapper::-webkit-scrollbar {
+    height: 8px;
+  }
+  #news-carousel-wrapper::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+  }
+  #news-carousel-wrapper::-webkit-scrollbar-track {
+    background-color: #222;
+  }
+  .news-feed-item {
+    flex: 0 0 auto;
+    width: 160px;
+    margin-right: 12px;
+    background-color: #222;
+    border-radius: 18px;
+    box-shadow: 0 0 10px #111 inset;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-feed-item:last-child {
+    margin-right: 0;
+  }
+  .news-feed-item:hover {
+    box-shadow: 0 0 20px #0077cc;
+  }
+  .news-feed-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 18px 18px 0 0;
+  }
+  .news-feed-content {
+    padding: 6px 10px;
+    flex-grow: 1;
+  }
+  .news-feed-content a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ccc;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .news-feed-content p {
+    font-size: 0.8rem;
+    color: #999;
+    height: 2.6rem;
+    overflow: hidden;
+    margin: 3px 0 0 0;
+  }
+
+  /* Ads carousel wrapper for horizontal scrolling */
+  #ads-carousel-wrapper {
+    width: 100vw;
+    background: #111;
+    padding: 15px 10px;
+    overflow-x: auto;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #222;
+  }
+  #ads-carousel-wrapper::-webkit-scrollbar {
+    height: 7px;
+  }
+  #ads-carousel-wrapper::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+  }
+  #ads-carousel-wrapper::-webkit-scrollbar-track {
+    background-color: #222;
+  }
+  .ad-slot {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 250px;
+    background: #222;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px #000 inset;
+  }
+
+  .carousel-wrapper {
+    width: 100vw;
+    background: #111;
+    padding: 15px 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid #222;
+  }
+  .carousel-wrapper::-webkit-scrollbar {
+    height: 7px;
+  }
+  .carousel-wrapper::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+  }
+  .carousel-wrapper::-webkit-scrollbar-track {
+    background-color: #222;
+  }
+  .group-tabs {
+    display: inline-flex;
+    gap: 8px;
+  }
+  .group-tabs button {
+    background-color: #111;
+    border: 2px solid #555;
+    color: #bbb;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.8);
+  }
+  .group-tabs button:hover,
+  .group-tabs button.active {
+    background-color: #0077cc;
+    border-color: #0077cc;
+    color: #fff;
+    box-shadow: 0 5px 15px rgb(0 119 204 / 0.8);
+  }
+  .group-tabs button i {
+    margin-right: 6px;
+  }
+  /* Share buttons style */
+  #share-buttons {
+    padding:10px 0 0 0;
+    text-align:center;
+  }
+  #share-buttons a {
+    font-size: 1em;
+    margin: 0 8px;
+    text-decoration: none;
+    transition: color 0.2s;
+    vertical-align: middle;
+    display: inline-block;
+  }
+  #share-buttons a:hover {
+    text-decoration: underline;
+    color: #fff !important;
+  }
+  #share-buttons .fa-twitter { color: #1DA1F2; }
+  #share-buttons .fa-facebook { color: #1877F3; }
+  #share-buttons .fa-whatsapp { color: #25D366; }
+
+  #disqus_thread {
+    width: 100vw;
+    min-height: 650px;
+    background: #111;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    color: #ccc;
+  }
+  @media(max-width: 480px){
+    #news-carousel-wrapper {
+      height: 150px;
+    }
+    .news-feed-item {
+      width: 140px;
+      margin-right: 10px;
+    }
+    .news-feed-item img {
+      height: 95px;
+    }
+    #ads-carousel-wrapper {
+      padding: 10px 6px;
+      gap: 12px;
+    }
+    .ad-slot {
+      width: 90vw;
+      height: 200px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<header>Testagram</header>
+
+<!-- News stories: horizontally scrollable -->
+<div id="news-carousel-wrapper" aria-label="News feed carousel" tabindex="0">
+  Loading news...
+</div>
+
+<!-- Ads carousel horizontally scrollable -->
+<div id="ads-carousel-wrapper" aria-label="Advertisement section">
+  <div class="ad-slot" id="exoclick-ad">
+    <!-- Exoclick Ad -->
+    <script async src="https://a.exdynsrv.com/ads.js"></script>
+    <ins class="exoclick" data-zoneid="2457585" style="display:inline-block;width:300px;height:250px;"></ins>
+  </div>
+
+  <div class="ad-slot" id="adsterra-ad">
+    <!-- Adsterra Ad -->
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '18d0d482298d34bd3713b4a42c4121c6',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/18d0d482298d34bd3713b4a42c4121c6/invoke.js"></script>
+  </div>
+
+  <div class="ad-slot" id="magsrv-ad">
+    <!-- MAGSrv Ad -->
+    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+    <ins class="eas6a97888e2" data-zoneid="5144454" style="display:inline-block;width:300px;height:250px;"></ins> 
+    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  </div>
+</div>
+
+<!-- Discussion groups tabs -->
+<div class="carousel-wrapper" aria-label="Discussion groups carousel" tabindex="0">
+  <div class="group-tabs" role="tablist" aria-orientation="horizontal">
+    <button role="tab" onclick="window.location.hash='group-politics';loadDisqus('group-politics', this)"><i class="fas fa-landmark"></i> Politics</button>
+    <button role="tab" onclick="window.location.hash='group-fashion';loadDisqus('group-fashion', this)"><i class="fas fa-tshirt"></i> Fashion</button>
+    <button role="tab" onclick="window.location.hash='group-hiphop';loadDisqus('group-hiphop', this)"><i class="fas fa-microphone-alt"></i> Hiphop</button>
+    <button role="tab" onclick="window.location.hash='group-celebrity';loadDisqus('group-celebrity', this)"><i class="fas fa-star"></i> Celebrity</button>
+    <button role="tab" onclick="window.location.hash='group-billboard';loadDisqus('group-billboard', this)"><i class="fas fa-music"></i> Billboard</button>
+    <button role="tab" onclick="window.location.hash='group-news';loadDisqus('group-news', this)"><i class="fas fa-newspaper"></i> News</button>
+    <button role="tab" onclick="window.location.hash='group-technology';loadDisqus('group-technology', this)"><i class="fas fa-laptop-code"></i> Technology</button>
+    <button role="tab" onclick="window.location.hash='group-ai';loadDisqus('group-ai', this)"><i class="fas fa-robot"></i> AI</button>
+    <button role="tab" onclick="window.location.hash='group-jobs';loadDisqus('group-jobs', this)"><i class="fas fa-briefcase"></i> Jobs</button>
+    <button role="tab" onclick="window.location.hash='group-sports';loadDisqus('group-sports', this)"><i class="fas fa-football-ball"></i> Sports</button>
+    <button role="tab" onclick="window.location.hash='group-tech';loadDisqus('group-tech', this)"><i class="fas fa-tools"></i> Dev</button>
+    <button role="tab" onclick="window.location.hash='group-memes';loadDisqus('group-memes', this)"><i class="fas fa-face-laugh"></i> Memes</button>
+  </div>
+  <!-- Share buttons for the selected group -->
+  <div id="share-buttons"></div>
+</div>
+
+<!-- Disqus comments container -->
+<div id="disqus_thread"></div>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+  const disqusShortname = 'celebrity-gossip-3';
+  let disqusLoaded = false;
+
+  function loadDisqus(groupId, button) {
+    // Highlight active tab
+    document.querySelectorAll('.group-tabs button').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+
+    updateShareLinks(groupId); // Show share buttons for current group
+
+    const disqus_config = function () {
+      this.page.url = `https://dreez-cell.github.io/Social/#${groupId}`;
+      this.page.identifier = groupId;
+    };
+
+    if (disqusLoaded) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      disqusLoaded = true;
+      window.disqus_config = disqus_config;
+      const d = document, s = d.createElement('script');
+      s.src = `https://${disqusShortname}.disqus.com/embed.js`;
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+
+  // Social Share Link Generator for Groups
+  function updateShareLinks(groupId) {
+    const url = `https://dreez-cell.github.io/Social/#${groupId}`;
+    const groupName = groupId.replace('group-','').replace(/^\w/, c => c.toUpperCase());
+    document.getElementById('share-buttons').innerHTML = `
+      <span style="color:#888;font-size:0.97em;margin-right:10px;">Share this group:</span>
+      <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=Join the ${groupName} discussion on Testagram!" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" title="Share on Facebook"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="https://wa.me/?text=Join%20the%20${groupName}%20discussion%20on%20Testagram!%20${encodeURIComponent(url)}" target="_blank" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    `;
+  }
+
+  // RSS feeds to pull news from
+  const rssFeeds = [
+    'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+    'https://feeds.bbci.co.uk/news/world/rss.xml',
+    'https://www.standardmedia.co.ke/rss/headlines.php?cat=top-news',
+    'https://pagesix.com/feed/'
+  ];
+
+  async function fetchRSS(url) {
+    // Use free CORS proxy to avoid cross-origin issues
+    const proxy = 'https://api.allorigins.win/get?url=';
+    try {
+      const res = await fetch(proxy + encodeURIComponent(url));
+      const data = await res.json();
+      return new window.DOMParser().parseFromString(data.contents, "text/xml");
+    } catch {
+      return null;
+    }
+  }
+
+  function getText(node, tag) {
+    const el = node.getElementsByTagName(tag)[0];
+    return el ? el.textContent : '';
+  }
+
+  function getImage(node) {
+    let media = node.getElementsByTagName('media:thumbnail')[0];
+    if(media && media.getAttribute('url')) return media.getAttribute('url');
+    let enclosure = node.getElementsByTagName('enclosure')[0];
+    if(enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
+    return 'https://via.placeholder.com/160x120?text=No+Image';
+  }
+
+  async function loadRSSFeeds() {
+    const container = document.getElementById('news-carousel-wrapper');
+    container.innerHTML = ''; // Clear before loading
+
+    for (let feedUrl of rssFeeds) {
+      const xml = await fetchRSS(feedUrl);
+      if (!xml) continue;
+
+      const items = xml.querySelectorAll('item');
+      for (let i=0; i < Math.min(5, items.length); i++) {
+        const item = items[i];
+        const title = getText(item, 'title');
+        const link = getText(item, 'link');
+        let desc = getText(item, 'description');
+        if(desc.length > 80) desc = desc.slice(0, 77) + '...';
+
+        const img = getImage(item);
+
+        // Create news card clickable and redirect to link
+        const card = document.createElement('a');
+        card.className = 'news-feed-item';
+        card.href = link;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.title = title;
+        card.innerHTML = `
+          <img src="${img}" alt="${title}" loading="lazy" />
+          <div class="news-feed-content">
+            <strong>${title}</strong>
+            <p>${desc}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    }
+  }
+
+  window.onload = () => {
+    loadRSSFeeds();
+    // On load: if there is a hash, activate corresponding tab and load Disqus
+    if (window.location.hash) {
+      const groupId = window.location.hash.substring(1);
+      // Find button with matching onclick handler
+      const btn = Array.from(document.querySelectorAll('.group-tabs button'))
+        .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(groupId));
+      if (btn) {
+        loadDisqus(groupId, btn);
+        updateShareLinks(groupId);
+      }
+    }
+  };
+</script>
+
+</body>
+</html>
